@@ -1,4 +1,12 @@
-### Phanxor's copy of ThePrimeagen's init.lua
-Prerequisite: install [ripgrep](https://github.com/BurntSushi/ripgrep).
+### Neovim setup!
+Phanxor's copy of ThePrimeagen's init.lua 
 
-[The full video of ThePrimeAgen setting up this repo](https://www.youtube.com/watch?v=w7i4amO_zaE)
+# Dependencies:
+- install [ripgrep](https://github.com/BurntSushi/ripgrep),
+- install missing software mentioned in `:checkhealth`.
+
+
+Included things:
+- lazy.nvim
+
+More to be added!
