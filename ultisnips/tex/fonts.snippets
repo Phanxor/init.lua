@@ -1,0 +1,43 @@
+global !p
+def isMath():
+  return int(vim.eval('vimtex#syntax#in_mathzone()')) > 0
+endglobal
+
+context "isMath()"
+snippet tt "text" Ai
+\textrm{$1}$0
+endsnippet
+
+context "isMath()"
+snippet pl "overline" Aw
+\overline{$1}$0
+endsnippet
+
+context "not isMath()"
+snippet __ "underline" Ai
+\underline{$1} $0
+endsnippet
+
+context "not isMath()"
+snippet emph "emph" Ai
+\emph{$1}$0
+endsnippet
+
+context "not isMath()"
+snippet bold "bold" Ai
+\textbf{$1}$0
+endsnippet
+
+snippet ;sec "section" Ai 
+\section{$1}$0
+endsnippet
+
+snippet ;ssec "subsection" Ai 
+\subsection{$1}$0
+endsnippet
+
+snippet ;sssec "subsubsection" Ai 
+\subsubsection{$1}$0
+endsnippet
+
+# vim:ft=snippets:

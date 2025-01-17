@@ -1,0 +1,52 @@
+global !p
+def isMath():
+  return int(vim.eval('vimtex#syntax#in_mathzone()')) > 0
+endglobal
+
+context "not isMath()"
+snippet usep "usepackage - removes square braces if options removed" wbA
+\usepackage`!p snip.rv='[' if t[1] else ""`${1:options}`!p snip.rv = ']' if t[1] else ""`{${2:package}}$0
+endsnippet
+
+context "not isMath()"
+snippet setup
+\documentclass{article}
+\usepackage{graphicx} % voor plaatjes
+\usepackage{amsthm} % voor bewijzen
+\usepackage{amsfonts} % voor verzamelingen: \mathbb
+\usepackage{amsmath}
+\usepackage[ddmmyyyy]{datetime} % zorgt voor dd-mm-yyyy notatie
+\renewcommand{\dateseparator}{-} 
+\usepackage[dutch]{babel} % zorgt voor zinsafbreking
+\title{$1}
+\author{Jurre Berman}
+
+\begin{document}
+\maketitle
+\subsection*{Vraag $2}
+$3
+\begin{proof}
+$4
+\end{proof}
+$0
+\end{document}
+
+endsnippet
+
+snippet brr "brackets" iA
+{$1}$0
+endsnippet
+
+context "not isMath()"
+snippet lrb2 ""
+asdf
+endsnippet
+snippet hh "backslash" iA
+\
+endsnippet
+
+context "not isMath()"
+snippet qq "quote" iA
+\`$1'$0
+endsnippet
+# vim:ft=snippets:
