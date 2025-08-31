@@ -1,0 +1,7 @@
+-- Vimwiki_location = ''
+-- vim.g.vimtex_view_sioyek_exe = ''
+-- vim.g.python3_host_prog = ''
+-- vim.g.ruby_host_prog = ''
+-- vim.g.node_host_prog = ''
+-- vim.g.perl_host_prog = ''
+-- vim.g.clipboard = ''

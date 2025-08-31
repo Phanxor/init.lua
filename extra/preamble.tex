@@ -1,0 +1,215 @@
+\documentclass[dutch, english, 11pt]{article}
+\author{Jurre Berman}
+% Font
+\usepackage{cochineal}
+\usepackage[T1]{fontenc}
+\let\oldnormalfont\normalfont
+\def\normalfont{\oldnormalfont\mdseries}
+\usepackage{amssymb}
+\usepackage{stmaryrd}  % \lightning
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+
+% Math environments
+\usepackage[fleqn]{mathtools}
+\usepackage{amsthm}
+
+% Special environments/functions
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,graphs}  % maybe datavisualization.formats.functions too?
+\usepackage{enumitem}
+\usepackage{fitch}
+
+% Formatting (manual)
+\usepackage{bm}  % \bm{}
+\usepackage{amsfonts}  % \mathbb{}
+\usepackage{mathrsfs}
+\usepackage{float}  % [H]
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{dcolumn}  % D column type
+\usepackage{multicol}  % multiple columns, manually
+\usepackage{romanbar}  % \Romanbar (roman numerals)
+
+% Formatting (automatic)
+\usepackage{babel}
+\usepackage{csquotes}  % otherwise latex complains in info text
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{emptypage}  % hide empty page page numbers
+\usepackage{datetime2}  % dd-mm-yyyy notation
+\usepackage{hyperref}
+% \hypersetup{  % idk if I still want this style
+% colorlinks,
+% citecolor=black,
+% filecolor=black,
+% linkcolor=black,
+% urlcolor=black
+% }
+
+% etc
+\usepackage{ifthen}
+\usepackage{biblatex}
+\usepackage{subfiles}
+
+% time setup
+\DTMsetup{useregional}
+\DTMtryregional{nl}{NL}
+
+\DTMsettimestyle{default}
+\DTMsetup{showseconds=false}
+\DTMnewdatestyle{dashes}{%
+  \renewcommand{\DTMdisplaydate}[4]{%
+    \number##3-\number##2-\number##1
+  }%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\newcolumntype{d}[1]{D{.}{.}{#1} } 
+
+% font choices
+\let\epsilon\varepsilon
+\let\phi\varphi
+\let\emptyset\varnothing
+
+% command setup
+\newcommand{\header}[1]{\multicolumn{1}{c}{#1}}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\desda}{desda}
+\newenvironment{ex}[2][Opgave]{\begin{trivlist} % https://www.overleaf.com/latex/templates/su-mat320-homework-template-bryant/wqkvrhnwbmfj
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][Uitwerking]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+\newcommand{\one}[1]{\ensuremath{\mathbbm{1}_{\{#1\}}}}
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\I}{\ensuremath{\mathbb{I}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\renewcommand{\P}{\ensuremath{\mathbb{P}}}
+\newcommand{\powerset}{\ensuremath{\mathcal{P}}}
+\newcommand{\E}{\ensuremath{\mathbb{E}}}
+\newcommand{\F}{\ensuremath{\mathcal{F}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\newcommand{\var}{\operatorname{var}}
+\newcommand{\cov}{\operatorname{cov}}
+\newcommand{\ord}{\operatorname{orde}}
+\newcommand{\sub}{\operatorname{Sub}}
+\newcommand{\xor}{\mathbin{\dot\lor}}
+\newcommand{\Mid}{\mathrel{\Big|}}
+\renewcommand{\O}{\ensuremath{\varnothing}}
+
+\newcommand{\tr}{\operatorname{tr}}
+\renewcommand{\gcd}{\operatorname{\iflanguage{dutch}{ggd}{gcd}}}
+\newcommand{\ggd}{\gcd}
+\newcommand{\lcm}{\operatorname{\iflanguage{dutch}{kgv}{lcm}}}
+\newcommand{\kgv}{\lcm}
+\let\on\operatorname%
+\renewcommand{\d}[2][]{%
+\ifthenelse{ \equal{#1}{}}
+{\operatorname{d}\!{#2}}
+{\ensuremath{\operatorname{d}^{#1}\!{#2}}}
+}
+\newcommand{\restr}[1]{\ensuremath{\raise-.3em\hbox{\ensuremath{\Big|}}_{#1}}}
+\apptocmd{\lim}{\limits}{}{}
+\newcommand\contra{\scalebox{1.5}{$\lightning$}}
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+\newcommand\is[1]{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily #1}}}{=}}}
+\newcommand\st[2]{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily #2}}}{#1}}}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+% hyperlinks
+\let\originaleqref\eqref % make \eqref clickable
+\makeatletter
+\renewcommand{\eqref}[1]{%
+  \begingroup%
+  \let\ref\@refstar%
+  \hyperref[#1]{%
+    \originaleqref{#1}%
+  }%
+  \endgroup
+}
+\makeatother
+\makeatletter
+ \newcommand{\linkdest}[1]{\Hy@raisedlink{\hypertarget{#1}{}}}
+\makeatother
+
+% fitch / nd
+\def\ndrules{%
+\def\ass{\by{(assumption)}{}}
+\def\prm{\by{(premise)}{}}
+\def\vari{\by{(variable)}{}}
+\def\varass{\by{(variable, assumption)}{}}
+\def\ii{\by{$\rightarrow$-in}}%
+\def\ie{\by{$\rightarrow$-el}}%
+\def\Ai{\by{$\forall$-in}}%
+\def\Ae{\by{$\forall$-el}}%
+\def\Ei{\by{$\exists$-in}}%
+\def\Ee{\by{$\exists$-el}}%
+\def\ai{\by{$\wedge$-in}}%
+\def\ae{\by{$\wedge$-el}}%
+\def\ai{\by{$\wedge$-in}}%
+\def\ae{\by{$\wedge$-el}}%
+\def\oi{\by{$\vee$-in}}%
+\def\oe{\by{$\vee$-el}}%
+\def\ni{\by{$\neg$-in}}%
+\def\ne{\by{$\neg$-el}}%
+\def\be{\by{$\bot$-el}}%
+\def\bi{\by{$\bot$-in}}%
+\def\nne{\by{$\neg\neg$-el}}%
+\def\fai{\by{$\forall$-in}}
+\def\fae{\by{$\forall$-el}}
+\def\exi{\by{$\exists$-in}}
+\def\exe{\by{$\exists$-el}}
+\def\r{\by{repeat}}
+}
+
+% Theorems
+\theoremstyle{definition}
+\newtheorem*{definitie}{Definitie}
+\newtheorem*{eigenschap}{Eigenschap}
+\newtheorem*{gevolg}{Gevolg}
+\newtheorem*{lemma}{Lemma}
+\newtheorem*{propositie}{Propositie}
+\newtheorem*{stelling}{Stelling}
+\newtheorem*{wet}{Wet}
+\newtheorem*{postulaat}{Postulaat}
+\newtheorem*{conclusie}{Conclusie}
+\newtheorem*{toemaatje}{Toemaatje}
+\newtheorem*{vermoeden}{Vermoeden}
+\newtheorem*{herhaling}{Herhaling}
+\newtheorem*{intermezzo}{Intermezzo}
+\newtheorem*{notatie}{Notatie}
+\newtheorem*{observatie}{Observatie}
+\newtheorem*{oef}{Oefening}
+\newtheorem*{opmerking}{Opmerking}
+\newtheorem*{praktisch}{Praktisch}
+\newtheorem*{probleem}{Probleem}
+\newtheorem*{terminologie}{Terminologie}
+\newtheorem*{toepassing}{Toepassing}
+\newtheorem*{uovt}{UOVT}
+\newtheorem*{vb}{Voorbeeld}
+\newtheorem*{vraag}{Vraag}
+
+\newtheorem*{definition}{Definition}
+\newtheorem*{eg}{Example}
+\newtheorem*{notation}{Notation}
+\newtheorem*{previouslyseen}{As previously seen}
+\newtheorem*{remark}{Remark}
+\newtheorem*{note}{Note}
+\newtheorem*{problem}{Problem}
+\newtheorem*{observe}{Observe}
+\newtheorem*{property}{Property}
+\newtheorem*{intuition}{Intuition}
+\newtheorem*{prop}{Proposition}
+\newtheorem*{theorem}{Theorem}
+\newtheorem*{corollary}{Corollary}
+\newtheorem*{claim}{Claim}
+\newtheorem*{voorbeeld}{Voorbeeld}
+\begin{document}
+\end{document}
