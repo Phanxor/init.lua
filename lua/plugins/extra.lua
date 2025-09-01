@@ -68,5 +68,9 @@ return {
             '<leader>v<leader>w', '<leader>v<leader>t', '<leader>v<leader>t',
             '<leader>v<leader>y', '<leader>v<leader>m'
         }
+    },
+    {
+        'lambdalisue/vim-suda',
+        cmd = { 'SudaWrite', 'SudaRead' }
     }
 }
