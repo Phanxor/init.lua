@@ -12,3 +12,12 @@ This configuration somehow breaks the spell check installation pop-up.
 You can install languages using `nvim -u none` by using `:set spell` and `:set spl=en_us,nl` or similar. It should ask you to download the necessary files.
 
 For lean, make sure to install both the `lean` and `lake` binaries. One way to do so is by using `elan`, the lean version manager.
+
+Since the Mason command `:MasonInstallAll` [does not exist](https://github.com/mason-org/mason.nvim/discussions/1618), you need to manually install some things using `:Mason install <thing>`
+or by finding a thing in `:Mason` and installing it with `I`.
+Recommendations:
+- `black`
+- `pyright`
+- `taplo`
+- `lua_ls`
+- `hls`
