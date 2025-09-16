@@ -19,5 +19,7 @@ Recommendations:
 - `black`
 - `pyright`
 - `taplo`
-- `lua_ls`
-- `hls`
+- `lua-language-server`
+<!-- - `haskell-language-server` -->
+
+For Haskell, install HLS, GHC and cabal using [`ghcup`](https://www.haskell.org/ghcup/), i.e. `ghcup tui`.

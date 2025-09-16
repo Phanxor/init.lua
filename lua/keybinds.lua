@@ -139,9 +139,10 @@ map('n', '<leader>ll', function()
         vim.api.nvim_command('CompilerRedo')
     end
 end)
+map('n', '<leader>lt', '<cmd>terminal<cr>', { desc = 'terminal' })
 
 -- CompetiTest
-map('n', '<leader>l;', 'CompetiTest run')
+map('n', '<leader>l;', '<cmd>CompetiTest run<cr>')
 -- vimtex
 -- insert mode mappings are nice ('`' + letter for symbol)
 -- motions are nice too (c for command, $ for math region etc)
