@@ -110,6 +110,13 @@ return {
                     package_pending = "➜",
                     package_uninstalled = "✗"
                 }
+            },
+            ensure_installed = {
+                'black',
+                'pyright',
+                'taplo',
+                'lua_ls',
+                'hls'
             }
         }
     },
