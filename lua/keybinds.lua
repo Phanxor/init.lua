@@ -130,6 +130,7 @@ map({'i', 'c'}, '<C-Space>', function()
 end)
 -- compiler/overseer
 -- same keymap as vimtex
+map('n', '<leader>c', function() vim.lsp.codelens.run() end)
 --
 require('which-key').add({{ '<leader>l', group = 'run' }})
 map('n', '<leader>ll', function()
@@ -224,5 +225,14 @@ vim.api.nvim_create_autocmd('FileType', {
         map('n', '<leader>ll', '<cmd>LeanAbbreviationsReverseLookup<cr>', {desc='look up abbreviation'})
         map('n', '<leader>lr', '<cmd>LeanRestartFile<cr>', {desc='restart'})
         map('n', '<leader>lt', '<cmd>Telescope loogle<cr>', {desc='loogle'})
+    end
+})
+
+vim.api.nvim_create_autocmd('Filetype', {
+    pattern='haskell',
+    callback = function()
+        pcall(vim.api.nvim_del_keymap, 'n', 'K')
+        map('n', 'K', function() require('haskell-tools').hoogle.hoogle_signature() end, { buffer=true })
+        map('n', '<leader>la', function() require('haskell-tools').lsp.buf_eval_all() end, { buffer=true })
     end
 })
