@@ -200,3 +200,28 @@ vim.api.nvim_create_autocmd('User', {
         end)
     end
 })
+
+
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'lean',
+    callback = function()
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>ll')
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>l;')
+        require('which-key').add({{ '<leader>l', group='lean'}})
+        map('n', '<leader>li', '<cmd>LeanInfoviewToggle<cr>', {desc='toggle infoview'})
+        map('n', '<leader>lf', '<cmd>LeanInfoviewPinTogglePause<cr>', {desc='toggle freezing pins'})
+        map('n', '<leader>lx', '<cmd>LeanInfoviewAddPin<cr>', {desc='add pin'})
+        map('n', '<leader>lc', '<cmd>LeanInfoviewClearPins<cr>', {desc='clear pins'})
+        map('n', '<leader>ldx', '<cmd>LeanInfoviewSetDiffPin<cr>', {desc='add pin (diff)'})
+        map('n', '<leader>ldc', '<cmd>LeanInfoviewClearDiffPin<cr>', {desc='clear pins (diff)'})
+        map('n', '<leader>ldd', '<cmd>LeanInfoviewToggleAutoDiffPin<cr>', {desc='toggle auto-diff'})
+        map('n', '<leader>ldt', '<cmd>LeanInfoviewToggleAutoDiffPin<cr>', {desc='clear & toggle auto-diff'})
+        map('n', '<leader>lw', '<cmd>LeanInfoviewEnableWidgets<cr>', {desc='enable widgets'})
+        map('n', '<leader>lW', '<cmd>LeanInfoviewDisableWidgets<cr>', {desc='disable widgets'})
+        map('n', '<leader>lv', '<cmd>LeanInfoviewViewOptions<cr>', {desc='options'})
+        map('n', '<leader><tab>', '<cmd>LeanGotoInfoview<cr>', {desc='switch to info'})
+        map('n', '<leader>ll', '<cmd>LeanAbbreviationsReverseLookup<cr>', {desc='look up abbreviation'})
+        map('n', '<leader>lr', '<cmd>LeanRestartFile<cr>', {desc='restart'})
+        map('n', '<leader>lt', '<cmd>Telescope loogle<cr>', {desc='loogle'})
+    end
+})

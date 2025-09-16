@@ -35,31 +35,31 @@ vim.api.nvim_create_autocmd('FileType',     {
     pattern  = { 'gitcommit', 'gitrebase', },
     command  = 'startinsert | 1'})
 
--- Automatically resize window when vimtex starts compiling on macos
-vim.api.nvim_create_autocmd("User", {
-    pattern = "VimtexEventCompileSuccess",
-    callback = function()
-        if vim.uv.os_uname().sysname == "Darwin" then
-            vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set position of window 1 to {0, 25}"')
-            vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set size of window 1 to {804, 875}"')
-            vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"sioyek\\" to set position of window 1 to {805, 25}"')
-            vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"sioyek\\" to set size of window 1 to {635, 875}"')
-        end
-    end
-})
+-- -- Automatically resize window when vimtex starts compiling on macos
+-- vim.api.nvim_create_autocmd("User", {
+--     pattern = "VimtexEventCompileSuccess",
+--     callback = function()
+--         if vim.uv.os_uname().sysname == "Darwin" then
+--             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set position of window 1 to {0, 25}"')
+--             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set size of window 1 to {804, 875}"')
+--             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"sioyek\\" to set position of window 1 to {805, 25}"')
+--             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"sioyek\\" to set size of window 1 to {635, 875}"')
+--         end
+--     end
+-- })
 
--- and automatically close the viewer when done (on macos).
--- This doesn't work with VimtexEventQuit sadly, since that event doesn't activate.
-vim.api.nvim_create_autocmd("User", {
-    pattern = "VimtexEventCompileStopped",
-    callback = function()
-        if vim.loop.os_uname().sysname == "Darwin" then
-            vim.fn.jobstart('osascript -e "tell application \\"sioyek\\" to quit"')
-            vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set position of window 1 to {0, 25}"')
-            vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set size of window 1 to {1440, 875}"')
-        end
-    end
-})
+-- -- and automatically close the viewer when done (on macos).
+-- -- This doesn't work with VimtexEventQuit sadly, since that event doesn't activate.
+-- vim.api.nvim_create_autocmd("User", {
+--     pattern = "VimtexEventCompileStopped",
+--     callback = function()
+--         if vim.loop.os_uname().sysname == "Darwin" then
+--             vim.fn.jobstart('osascript -e "tell application \\"sioyek\\" to quit"')
+--             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set position of window 1 to {0, 25}"')
+--             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set size of window 1 to {1440, 875}"')
+--         end
+--     end
+-- })
 
 -- Focus the terminal after inverse search
 vim.api.nvim_create_autocmd("User", {
@@ -153,8 +153,8 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 --     -- command = ''
 -- })
 
--- initialize molten
-vim.api.nvim_create_autocmd('FileType', {
-    pattern = 'markdown,quarto',  -- somehow this executes twice, not that it matters that much
-    callback = function() vim.api.nvim_command('MoltenInit') end,
-})
+-- -- initialize molten
+-- vim.api.nvim_create_autocmd('FileType', {
+--     pattern = 'markdown,quarto',  -- somehow this executes twice, not that it matters that much
+--     callback = function() vim.api.nvim_command('MoltenInit') end,
+-- })

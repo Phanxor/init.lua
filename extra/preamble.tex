@@ -1,4 +1,4 @@
-\documentclass[dutch, english, 11pt]{article}
+\documentclass[11pt]{article}
 \author{Jurre Berman}
 % Font
 \usepackage{cochineal}
@@ -23,6 +23,7 @@
 \usepackage{bm}  % \bm{}
 \usepackage{amsfonts}  % \mathbb{}
 \usepackage{mathrsfs}
+\usepackage{bbm}
 \usepackage{float}  % [H]
 \usepackage{booktabs}
 \usepackage{array}
@@ -31,7 +32,7 @@
 \usepackage{romanbar}  % \Romanbar (roman numerals)
 
 % Formatting (automatic)
-\usepackage{babel}
+\usepackage[dutch, english]{babel}
 \usepackage{csquotes}  % otherwise latex complains in info text
 \usepackage{parskip}
 \usepackage{graphicx}
@@ -75,10 +76,10 @@
 \DeclareMathOperator{\ran}{ran}
 \DeclareMathOperator{\rk}{rk}
 \DeclareMathOperator{\desda}{desda}
-\newenvironment{ex}[2][Opgave]{\begin{trivlist} % https://www.overleaf.com/latex/templates/su-mat320-homework-template-bryant/wqkvrhnwbmfj
+\newenvironment{ex}[2][\iflanguage{dutch}{Opgave}{Exercise}]{\begin{trivlist} % https://www.overleaf.com/latex/templates/su-mat320-homework-template-bryant/wqkvrhnwbmfj
 \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
 
-\newenvironment{sol}[1][Uitwerking]{\begin{trivlist}
+\newenvironment{sol}[1][\iflanguage{dutch}{Uitwerking}{Solution}]{\begin{trivlist}
 \item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
 \newcommand{\one}[1]{\ensuremath{\mathbbm{1}_{\{#1\}}}}
 \newcommand{\A}{\ensuremath{\mathcal{A}}}
@@ -101,6 +102,7 @@
 \renewcommand{\O}{\ensuremath{\varnothing}}
 
 \newcommand{\tr}{\operatorname{tr}}
+\newcommand{\spec}{\operatorname{Spec}}
 \renewcommand{\gcd}{\operatorname{\iflanguage{dutch}{ggd}{gcd}}}
 \newcommand{\ggd}{\gcd}
 \newcommand{\lcm}{\operatorname{\iflanguage{dutch}{kgv}{lcm}}}
@@ -118,7 +120,8 @@
     \noindent\rule[0.5ex]{\linewidth}{0.5pt}
 }
 \newcommand\is[1]{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily #1}}}{=}}}
-\newcommand\st[2]{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily #2}}}{#1}}}
+\newcommand\st[2]{\mathrel{\overset{\mbox{\normalfont\tiny\sffamily \ensuremath{#2}}}{\ensuremath{#1}}}}
+\newcommand\stt[3]{\mathrel{\overset{\parbox[c]{#1}{\normalfont\tiny\sffamily \ensuremath{#3}}}{\ensuremath{#2}}}}
 \makeatletter
 \def\thm@space@setup{%
   \thm@preskip=\parskip \thm@postskip=0pt

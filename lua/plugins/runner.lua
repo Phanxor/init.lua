@@ -34,6 +34,19 @@ return {
     {
         'stevearc/overseer.nvim',
         opts = {},
-    }
+    },
+    {
+        'Julian/lean.nvim',
+        -- event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+        dependencies = {
+            'neovim/nvim-lspconfig',
+            'nvim-lua/plenary.nvim',
+            'Saghen/blink.cmp',
+            'nvim-telescope/telescope.nvim',
+        },
+        opts = {
+            mappings = false,
+        }
+    },
 }
 

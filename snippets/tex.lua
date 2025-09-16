@@ -194,7 +194,15 @@ local toggle_math = {f(function()
     vim.fn['vimtex#env#toggle_math']()  -- swap around math modes (direct is not important)
     return ''
 end)}
-add(sm({trig='mm', wordTrig=true}, toggle_math))
+add(sm({trig='mm', wordTrig=true}, f(function()
+    vim.cmd.normal('f$')
+    return ''
+end)))
+add(snm('prf', { t({'\\begin{proof}', ''}), i(0), t({'', '\\end{proof}', ''}) }))
+add_manual(snm('?', {
+    t('\\begin{ex}{'), i(1),
+    t({'}\\ \\\\', ''}), i(0),
+    t({'', '\\end{ex}', '\\begin{sol}\\ \\\\', '', '\\end{sol}'}) }))
 add(sm({trig='nn', wordTrig=true}, toggle_math))
 add(snm({trig='nn', wordTrig=true}, {
     isn(1, f(function()
@@ -457,6 +465,9 @@ add(sm({trig='d_(%d+)([%a])D([%a])', trigEngine='pattern'}, {
     f(function(_, snip) return snip.captures[1] end),
     t('}} '),
 }))
+add(snm({trig=',,(.)', trigEngine='pattern'}, {
+    t('$'), f(function(_, snip) return snip.captures[1] end), t('$')
+}))
 add(sm({trig='d([%a])D([%a])', trigEngine='pattern'}, {
     t('\\frac{\\d{'),
     f(function(_, snip) return snip.captures[1] end),
@@ -492,12 +503,6 @@ add(snm('fnc', { t({
 '\\draw[->] (0,-5.2) -- (0,5.2) node[above] {$y$};',
 '\\draw[color=blue] plot[id=x] (\\x,'
 }), i(1), t({');', '\\end{tikzpicture}', ''}), i(0)
-}))
-add(snm('??', {
-    t('\\begin{ex}{'), i(1),
-    t({'}', ''}), i(2),
-    t({'', '\\end{ex}', '\\begin{sol}', ''}), i(3),
-    t({'', '\\end{sol}', ''}), i(0)
 }))
 -- TODO: proofs, theorems, homework questions etc.
 -- add(sm('/', {t('/'), f(function() vim.fn['vimtex#cmd#toggle_frac']() end)})) -- this is too bad
