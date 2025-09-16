@@ -1,6 +1,6 @@
 lua/links.lua
 test*
-*lock.json
+lazy-lock.json
 *.DS_STORE
 *.pdf
 *.synctex.gz
