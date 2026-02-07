@@ -8,17 +8,25 @@
 \usepackage{amssymb}
 \usepackage{stmaryrd}  % \lightning
 \SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+\usepackage{physics}
 
 % Math environments
+% \usepackage{tcolorbox}
 \usepackage[fleqn]{mathtools}
-\usepackage{amsthm}
+\usepackage{keytheorems}
 
 % Special environments/functions
 \usepackage{tikz}
 \usetikzlibrary{calc,positioning,graphs}  % maybe datavisualization.formats.functions too?
+\usetikzlibrary{arrows,shapes}
 \usepackage{enumitem}
 \usepackage{fitch}
 \usepackage{todonotes}
+
+% inkscape support https://castel.dev/post/lecture-notes-2/
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
 
 % Formatting (manual)
 \usepackage{bm}  % \bm{}
@@ -39,19 +47,18 @@
 \usepackage{graphicx}
 \usepackage{emptypage}  % hide empty page page numbers
 \usepackage{datetime2}  % dd-mm-yyyy notation
+\usepackage{zref-clever}
 \usepackage{hyperref}
-% \hypersetup{  % idk if I still want this style
-% colorlinks,
-% citecolor=black,
-% filecolor=black,
-% linkcolor=black,
-% urlcolor=black
-% }
 
 % etc
 \usepackage{ifthen}
-\usepackage{biblatex}
+% \usepackage{biblatex}
 \usepackage{subfiles}
+
+% hyperref
+\hypersetup{
+colorlinks=true
+}
 
 % time setup
 \DTMsetup{useregional}
@@ -73,19 +80,26 @@
 \let\emptyset\varnothing
 
 % command setup
-\newcommand{\incfig}[2][1]{%
-\def\svgwidth{#1\columnwidth}
-\import{./figures/}{#2.pdf_tex}
-}
+% https://tex.stackexchange.com/a/129100
+\newcommand{\mymk}[1]{%
+  \tikz[baseline=(char.base)]\node[anchor=south west, draw,rectangle, rounded corners, inner sep=2pt, minimum size=7mm,
+    text height=2mm](char){\ensuremath{#1}} ;}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
 \newcommand{\header}[1]{\multicolumn{1}{c}{#1}}
 \DeclareMathOperator{\ran}{ran}
 \DeclareMathOperator{\rk}{rk}
 \DeclareMathOperator{\desda}{desda}
-\newenvironment{ex}[2][\iflanguage{dutch}{Opgave}{Exercise}]{\begin{trivlist} % https://www.overleaf.com/latex/templates/su-mat320-homework-template-bryant/wqkvrhnwbmfj
-\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+% \newenvironment{ex}[2][\iflanguage{dutch}{Opgave}{Exercise}]{\begin{trivlist} % https://www.overleaf.com/latex/templates/su-mat320-homework-template-bryant/wqkvrhnwbmfj
+% \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newcommand{\incfig}[2][1]{%
+\def\svgwidth{#1\columnwidth}
+\import{./figures/}{#2.pdf_tex}
+}
 
-\newenvironment{sol}[1][\iflanguage{dutch}{Uitwerking}{Solution}]{\begin{trivlist}
-\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+% \newenvironment{sol}[1][\iflanguage{dutch}{Uitwerking}{Solution}]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
 \newcommand{\one}[1]{\ensuremath{\mathbbm{1}_{\{#1\}}}}
 \newcommand{\A}{\ensuremath{\mathcal{A}}}
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
@@ -94,11 +108,12 @@
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
 \newcommand{\Q}{\ensuremath{\mathbb{Q}}}
 \renewcommand{\P}{\ensuremath{\mathbb{P}}}
-\newcommand{\powerset}{\ensuremath{\mathcal{P}}}
+\newcommand{\powerset}{\ensuremath{\mathcal{P}}} % What about \wp?
 \newcommand{\E}{\ensuremath{\mathbb{E}}}
 \newcommand{\F}{\ensuremath{\mathcal{F}}}
 \newcommand{\C}{\ensuremath{\mathbb{C}}}
-\newcommand{\var}{\operatorname{var}}
+\renewcommand{\var}{\operatorname{var}}
+\newcommand{\NOT}{\operatorname{NOT}}
 \newcommand{\cov}{\operatorname{cov}}
 \newcommand{\ord}{\operatorname{orde}}
 \newcommand{\sub}{\operatorname{Sub}}
@@ -106,7 +121,7 @@
 \newcommand{\Mid}{\mathrel{\Big|}}
 \renewcommand{\O}{\ensuremath{\varnothing}}
 
-\newcommand{\tr}{\operatorname{tr}}
+\renewcommand{\tr}{\operatorname{tr}}
 \newcommand{\spec}{\operatorname{Spec}}
 \renewcommand{\gcd}{\operatorname{\iflanguage{dutch}{ggd}{gcd}}}
 \newcommand{\ggd}{\gcd}
@@ -177,47 +192,45 @@
 \def\r{\by{repeat}}
 }
 
+% keytheorems setup
+% \tcbset{
+%     styleOne\.style={
+%         arc = 1mm,
+%             colback=blue!10!white,
+%         % colframe=blue!75!black,
+%     }
+%     styleTwo\.style={
+%         arc = 0mm, % note: still rounded corners somehow.
+%         colback=black,
+%         % colframe=blue!75!black,
+%     }
+% }
+\keytheoremset{store-all, store-sets-label, auto-translate=false}
+\newkeytheoremstyle{default}{bodyfont=\slshape}
+% \newkeytheoremstyle{box}{bodyfont=\slshape, tcolorbox={styleOne}}
+\newkeytheoremstyle{qa}{bodyfont=\normalshape, break}
+% \newkeytheoremstyle{qabox}{bodyfont=\normalshape, break, tcolorbox={styleTwo}}
 % Theorems
-\theoremstyle{definition}
-\newtheorem*{definitie}{Definitie}
-\newtheorem*{eigenschap}{Eigenschap}
-\newtheorem*{gevolg}{Gevolg}
-\newtheorem*{lemma}{Lemma}
-\newtheorem*{propositie}{Propositie}
-\newtheorem*{stelling}{Stelling}
-\newtheorem*{wet}{Wet}
-\newtheorem*{postulaat}{Postulaat}
-\newtheorem*{conclusie}{Conclusie}
-\newtheorem*{toemaatje}{Toemaatje}
-\newtheorem*{vermoeden}{Vermoeden}
-\newtheorem*{herhaling}{Herhaling}
-\newtheorem*{intermezzo}{Intermezzo}
-\newtheorem*{notatie}{Notatie}
-\newtheorem*{observatie}{Observatie}
-\newtheorem*{oef}{Oefening}
-\newtheorem*{opmerking}{Opmerking}
-\newtheorem*{praktisch}{Praktisch}
-\newtheorem*{probleem}{Probleem}
-\newtheorem*{terminologie}{Terminologie}
-\newtheorem*{toepassing}{Toepassing}
-\newtheorem*{uovt}{UOVT}
-\newtheorem*{vb}{Voorbeeld}
-\newtheorem*{vraag}{Vraag}
-
-\newtheorem*{definition}{Definition}
-\newtheorem*{eg}{Example}
-\newtheorem*{notation}{Notation}
-\newtheorem*{previouslyseen}{As previously seen}
-\newtheorem*{remark}{Remark}
-\newtheorem*{note}{Note}
-\newtheorem*{problem}{Problem}
-\newtheorem*{observe}{Observe}
-\newtheorem*{property}{Property}
-\newtheorem*{intuition}{Intuition}
-\newtheorem*{prop}{Proposition}
-\newtheorem*{theorem}{Theorem}
-\newtheorem*{corollary}{Corollary}
-\newtheorem*{claim}{Claim}
-\newtheorem*{voorbeeld}{Voorbeeld}
+\newkeytheorem{definition}[style=default, parent=section]
+\newkeytheorem{proposition}[style=default, sibling=definition]
+\newkeytheorem{claim}[style=default, sibling=definition]
+\newkeytheorem{conjecture}[style=default, sibling=definition]
+\newkeytheorem{theorem}[style=default, sibling=definition]
+\newkeytheorem{lemma}[style=default, sibling=definition]
+\newkeytheorem{corollary}[style=default, sibling=definition]
+\newkeytheorem{remark}[style=default, sibling=definition]
+\newkeytheorem{example}[style=qa, numbered=false]
+\newkeytheorem{notes}[name=Notes,refname={notes,notes},Refname={Notes,Notes},
+numbered=false,style=default, sibling=definition, style=qa]
+% \newkeytheorem{ex}[refname={exercise,exercises},Refname={Exercise,Exercises},
+% style=qa, name=Opgave]
+% \newkeytheorem{sol}[refname={solution,solutions},Refname={Solution,Solutions},
+% style=qa, name=Oplossing, qed=\triangle, numbered=false]
+\newkeytheorem{ex}[refname={exercise,exercises},Refname={Exercise,Exercises},
+style=qa, name=Exercise]
+\newkeytheorem{sol}[refname={solution,solutions},Refname={Solution,Solutions},
+style=qa, name=Solution, qed=\triangle, numbered=false]
+\DeclareTranslation{dutch}{keythms_listof_title}{Lijst van stellingen}
+\DeclareTranslation{dutch}{remark_name}{Opmerking}
 \begin{document}
 \end{document}

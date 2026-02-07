@@ -1,7 +1,7 @@
 -- add lua/links.lua from template if it doesn't exist
 Vimwiki_location = vim.fn.stdpath('data') .. '/vimwiki'  -- initialize variable
 local links_file = vim.fn.stdpath('config') .. '/lua/links.lua'
-local links_placeholder = vim.fn.stdpath('config') .. '/extra/links_template.lua'
+local links_placeholder = vim.fn.stdpath('config') .. '/extra/templates/links.lua'
 if not vim.uv.fs_stat(links_file) then
     vim.uv.fs_copyfile(links_placeholder, links_file)
 else

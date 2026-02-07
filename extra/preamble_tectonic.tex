@@ -1,0 +1,255 @@
+\documentclass[11pt]{article}
+\author{Jurre Berman}
+% Font
+\usepackage{cochineal}
+% \usepackage[T1]{fontenc}
+\usepackage{fontspec}
+\let\oldnormalfont\normalfont
+\def\normalfont{\oldnormalfont\mdseries}
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage{stmaryrd}  % \lightning
+\SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
+\usepackage{physics}
+
+% Math environments
+% \usepackage{tcolorbox}
+\usepackage{thmtools}
+% \usepackage{keytheorems}
+
+% Special environments/functions
+\usepackage{tikz}
+\usetikzlibrary{calc,positioning,graphs}  % maybe datavisualization.formats.functions too?
+\usetikzlibrary{arrows,shapes}
+\usepackage{quantikz}
+\usepackage{enumitem}
+% \usepackage{fitch}
+\usepackage{todonotes}
+
+% inkscape support https://castel.dev/post/lecture-notes-2/
+\usepackage{import}
+\usepackage{pdfpages}
+\usepackage{transparent}
+
+% Formatting (manual)
+\usepackage{bm}  % \bm{}
+\usepackage{amsfonts}  % \mathbb{}
+\usepackage{mathrsfs}
+\usepackage{bbm}
+\usepackage{float}  % [H]
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{dcolumn}  % D column type
+\usepackage{multicol}  % multiple columns, manually
+\usepackage{romanbar}  % \Romanbar (roman numerals)
+
+% Formatting (automatic)
+\usepackage[dutch, english]{babel}
+\usepackage{csquotes}  % otherwise latex complains in info text
+\usepackage{parskip}
+\usepackage{graphicx}
+\usepackage{emptypage}  % hide empty page page numbers
+\usepackage{datetime2}  % dd-mm-yyyy notation
+\usepackage{zref-clever}
+% etc
+\usepackage{ifthen}
+\usepackage{biblatex}
+\usepackage{subfiles}
+
+% hyperref
+% \usepackage[pdfversion=1.7]{hyperref}
+% \hypersetup{
+% colorlinks=true
+% }
+%
+% time setup
+\DTMsetup{useregional}
+\DTMtryregional{nl}{NL}
+
+\DTMsettimestyle{default}
+\DTMsetup{showseconds=false}
+\DTMnewdatestyle{dashes}{%
+  \renewcommand{\DTMdisplaydate}[4]{%
+    \number##3-\number##2-\number##1
+  }%
+  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
+}
+\newcolumntype{d}[1]{D{.}{.}{#1} } 
+
+% font choices
+\let\epsilon\varepsilon
+\let\phi\varphi
+\let\emptyset\varnothing
+
+% command setup
+% https://tex.stackexchange.com/a/129100
+\newcommand{\mymk}[1]{%
+  \tikz[baseline=(char.base)]\node[anchor=south west, draw,rectangle, rounded corners, inner sep=2pt, minimum size=7mm,
+    text height=2mm](char){\ensuremath{#1}} ;}
+
+\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+            \node[shape=circle,draw,inner sep=2pt] (char) {#1};}}
+\newcommand{\header}[1]{\multicolumn{1}{c}{#1}}
+\DeclareMathOperator{\ran}{ran}
+\DeclareMathOperator{\rk}{rk}
+\DeclareMathOperator{\desda}{desda}
+% \newenvironment{ex}[2][\iflanguage{dutch}{Opgave}{Exercise}]{\begin{trivlist} % https://www.overleaf.com/latex/templates/su-mat320-homework-template-bryant/wqkvrhnwbmfj
+% \item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+\newcommand{\incfig}[2][1]{%
+\def\svgwidth{#1\columnwidth}
+\import{./figures/}{#2.pdf_tex}
+}
+
+% \newenvironment{sol}[1][\iflanguage{dutch}{Uitwerking}{Solution}]{\begin{trivlist}
+% \item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+\newcommand{\one}[1]{\ensuremath{\mathbbm{1}_{\{#1\}}}}
+\newcommand{\A}{\ensuremath{\mathcal{A}}}
+\newcommand{\N}{\ensuremath{\mathbb{N}}}
+\newcommand{\I}{\ensuremath{\mathbb{I}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Q}{\ensuremath{\mathbb{Q}}}
+\renewcommand{\P}{\ensuremath{\mathbb{P}}}
+\newcommand{\powerset}{\ensuremath{\mathcal{P}}} % What about \wp?
+\newcommand{\E}{\ensuremath{\mathbb{E}}}
+\newcommand{\F}{\ensuremath{\mathcal{F}}}
+\newcommand{\C}{\ensuremath{\mathbb{C}}}
+\renewcommand{\var}{\operatorname{var}}
+\newcommand{\NOT}{\operatorname{NOT}}
+\newcommand{\cov}{\operatorname{cov}}
+\newcommand{\ord}{\operatorname{orde}}
+\newcommand{\sub}{\operatorname{Sub}}
+\newcommand{\xor}{\mathbin{\dot\lor}}
+\newcommand{\Mid}{\mathrel{\Big|}}
+\renewcommand{\O}{\ensuremath{\varnothing}}
+
+\renewcommand{\tr}{\operatorname{tr}}
+\newcommand{\spec}{\operatorname{Spec}}
+\renewcommand{\gcd}{\operatorname{\iflanguage{dutch}{ggd}{gcd}}}
+\newcommand{\ggd}{\gcd}
+\newcommand{\lcm}{\operatorname{\iflanguage{dutch}{kgv}{lcm}}}
+\newcommand{\kgv}{\lcm}
+\let\on\operatorname%
+\renewcommand{\d}[2][]{%
+\ifthenelse{ \equal{#1}{}}
+{\operatorname{d}\!{#2}}
+{\ensuremath{\operatorname{d}^{#1}\!{#2}}}
+}
+\newcommand{\restr}[1]{\ensuremath{\raise-.3em\hbox{\ensuremath{\Big|}}_{#1}}}
+\apptocmd{\lim}{\limits}{}{}
+\newcommand\contra{\scalebox{1.5}{$\lightning$}}
+\newcommand\hr{
+    \noindent\rule[0.5ex]{\linewidth}{0.5pt}
+}
+\newcommand\is[1]{\mathrel{\overset{\makebox[0pt]{\mbox{\normalfont\tiny\sffamily #1}}}{=}}}
+\newcommand\st[2]{\mathrel{\overset{\mbox{\normalfont\tiny\sffamily \ensuremath{#2}}}{\ensuremath{#1}}}}
+\newcommand\stt[3]{\mathrel{\overset{\parbox[c]{#1}{\normalfont\tiny\sffamily \ensuremath{#3}}}{\ensuremath{#2}}}}
+\makeatletter
+\def\thm@space@setup{%
+  \thm@preskip=\parskip \thm@postskip=0pt
+}
+% hyperlinks
+% \let\originaleqref\eqref % make \eqref clickable
+% \makeatletter
+% \renewcommand{\eqref}[1]{%
+%   \begingroup%
+%   \let\ref\@refstar%
+%   \hyperref[#1]{%
+%     \originaleqref{#1}%
+%   }%
+%   \endgroup
+% }
+% \makeatother
+% \makeatletter
+%  \newcommand{\linkdest}[1]{\Hy@raisedlink{\hypertarget{#1}{}}}
+% \makeatother
+
+% fitch / nd
+% \def\ndrules{%
+% \def\ass{\by{(assumption)}{}}
+% \def\prm{\by{(premise)}{}}
+% \def\vari{\by{(variable)}{}}
+% \def\varass{\by{(variable, assumption)}{}}
+% \def\ii{\by{$\rightarrow$-in}}%
+% \def\ie{\by{$\rightarrow$-el}}%
+% \def\Ai{\by{$\forall$-in}}%
+% \def\Ae{\by{$\forall$-el}}%
+% \def\Ei{\by{$\exists$-in}}%
+% \def\Ee{\by{$\exists$-el}}%
+% \def\ai{\by{$\wedge$-in}}%
+% \def\ae{\by{$\wedge$-el}}%
+% \def\ai{\by{$\wedge$-in}}%
+% \def\ae{\by{$\wedge$-el}}%
+% \def\oi{\by{$\vee$-in}}%
+% \def\oe{\by{$\vee$-el}}%
+% \def\ni{\by{$\neg$-in}}%
+% \def\ne{\by{$\neg$-el}}%
+% \def\be{\by{$\bot$-el}}%
+% \def\bi{\by{$\bot$-in}}%
+% \def\nne{\by{$\neg\neg$-el}}%
+% \def\fai{\by{$\forall$-in}}
+% \def\fae{\by{$\forall$-el}}
+% \def\exi{\by{$\exists$-in}}
+% \def\exe{\by{$\exists$-el}}
+% \def\r{\by{repeat}}
+% }
+
+% keytheorems setup
+% \tcbset{
+%     styleOne\.style={
+%         arc = 1mm,
+%             colback=blue!10!white,
+%         % colframe=blue!75!black,
+%     }
+%     styleTwo\.style={
+%         arc = 0mm, % note: still rounded corners somehow.
+%         colback=black,
+%         % colframe=blue!75!black,
+%     }
+% }
+% \keytheoremset{store-all, store-sets-label, auto-translate=false}
+% \newkeytheoremstyle{default}{bodyfont=\slshape}
+% % \newkeytheoremstyle{box}{bodyfont=\slshape, tcolorbox={styleOne}}
+% \newkeytheoremstyle{qa}{bodyfont=\normalshape, break}
+% % \newkeytheoremstyle{qabox}{bodyfont=\normalshape, break, tcolorbox={styleTwo}}
+% % Theorems
+% \newkeytheorem{definition}[style=default, parent=section]
+% \newkeytheorem{proposition}[style=default, sibling=definition]
+% \newkeytheorem{claim}[style=default, sibling=definition]
+% \newkeytheorem{conjecture}[style=default, sibling=definition]
+% \newkeytheorem{theorem}[style=default, sibling=definition]
+% \newkeytheorem{lemma}[style=default, sibling=definition]
+% \newkeytheorem{corollary}[style=default, sibling=definition]
+% \newkeytheorem{remark}[style=default, sibling=definition]
+% \newkeytheorem{example}[style=qa, numbered=false]
+% \newkeytheorem{notes}[name=Notes,refname={notes,notes},Refname={Notes,Notes},
+% numbered=false,style=default, sibling=definition, style=qa]
+% % \newkeytheorem{ex}[refname={exercise,exercises},Refname={Exercise,Exercises},
+% % style=qa, name=Opgave]
+% % \newkeytheorem{sol}[refname={solution,solutions},Refname={Solution,Solutions},
+% % style=qa, name=Oplossing, qed=\triangle, numbered=false]
+% \newkeytheorem{ex}[refname={exercise,exercises},Refname={Exercise,Exercises},
+% style=qa, name=Exercise]
+% \newkeytheorem{sol}[refname={solution,solutions},Refname={Solution,Solutions},
+% style=qa, name=Solution, qed=\triangle, numbered=false]
+% \DeclareTranslation{dutch}{keythms_listof_title}{Lijst van stellingen}
+% \DeclareTranslation{dutch}{remark_name}{Opmerking}
+\usepackage{thmtools}
+\declaretheorem{definition}
+\declaretheorem{proposition}
+\declaretheorem{claim}
+\declaretheorem{conjecture}
+\declaretheorem{theorem}
+\declaretheorem{lemma}
+\declaretheorem{corollary}
+\declaretheorem{remark}
+\declaretheorem{example}
+\declaretheorem{notes}
+\declaretheorem{proof}
+\newenvironment{ex}[2][\iflanguage{dutch}{Opgave}{Exercise}]{\begin{trivlist} % https://www.overleaf.com/latex/templates/su-mat320-homework-template-bryant/wqkvrhnwbmfj
+\item[\hskip \labelsep {\bfseries #1}\hskip \labelsep {\bfseries #2.}]}{\end{trivlist}}
+
+\newenvironment{sol}[1][\iflanguage{dutch}{Uitwerking}{Solution}]{\begin{trivlist}
+\item[\hskip \labelsep {\bfseries #1:}]}{\end{trivlist}}
+\begin{document}
+\end{document}

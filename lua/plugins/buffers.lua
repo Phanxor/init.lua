@@ -1,12 +1,18 @@
 return {
     {
+        'lewis6991/gitsigns.nvim',
+        opts = {
+            signcolumn = false,
+        }
+    },
+    {
         'romgrk/barbar.nvim',
         dependencies = {
             'lewis6991/gitsigns.nvim', -- OPTIONAL: for git status
             'nvim-tree/nvim-web-devicons', -- OPTIONAL: for file icons
         },
         opts = {
-            sidebar_filetypes = { -- offset the tabline and set the titles
+            sidebar_filetypes = { -- offset the tabline and set the title.
                 ['neo-tree'] = {
                     text = 'neotree',
                     align = 'center',

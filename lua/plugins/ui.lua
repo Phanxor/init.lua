@@ -44,6 +44,9 @@ return {
                 display = {
                     done_ttl = 0,
                 },
+                ignore = {
+                    'ltex_plus'
+                }
             }
         }
     },

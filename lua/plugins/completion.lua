@@ -69,10 +69,11 @@ return {
             require('luasnip.loaders.from_vscode').lazy_load({ paths = vim.fn.stdpath('config') .. '/snippets' })
             require('luasnip.loaders.from_lua').lazy_load({ paths = vim.fn.stdpath('config') .. '/snippets' })
             -- https://github.com/L3MON4D3/LuaSnip/issues/830
-            local auto_expand = require("luasnip").expand_auto
-            require('luasnip').expand_auto = function()
-                vim.o.undolevels = vim.o.undolevels  -- triggers undo save
-                auto_expand()
+            -- hopefully triggers undo save before expanding
+            local snip_expand = require('luasnip').snip_expand
+            require('luasnip').snip_expand = function(...)
+                vim.o.ul = vim.o.ul
+                snip_expand(...)
             end
             return {
                 enable_autosnippets = true,
@@ -90,12 +91,16 @@ return {
             jsonFormatter = 'jq',  -- for formatted snippet files
         },
     },
-    {
-        'dense-analysis/ale',
-    },
+    -- {
+    --     'dense-analysis/ale',
+    -- },
     {
         'mason-org/mason-lspconfig.nvim',
-        opts = {},
+        opts = {
+            automatic_enable = { exclude = {
+                'matlab_ls'
+            }}
+        },
         dependencies = {
             'neovim/nvim-lspconfig',  -- auto configure lsps
             'mason-org/mason.nvim'
@@ -122,4 +127,13 @@ return {
             },
         }
     },
+    {  -- add ltex_plus (ltex-ls-plus) dictionary functionality
+        'barreiroleo/ltex_extra.nvim',
+        branch = "dev",  -- github says it'll merge soon, TODO: fix if updated
+        ft = { 'latex', 'tex', 'bib', 'markdown' },
+        opts = {
+            load_langs = { 'nl', 'en-US' },
+            path = vim.fn.stdpath('data') .. '/ltex',  -- global dictionaries
+        },
+    }
 }

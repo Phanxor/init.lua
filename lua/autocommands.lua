@@ -108,11 +108,24 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
--- Start vimtex compiling automatically.
+-- Set the opened tex file as the main file by default.
+vim.api.nvim_create_autocmd('BufReadPre', {
+    pattern = '*.tex',
+    callback = function(ev)
+        vim.api.nvim_buf_set_var(ev.buf, 'vimtex_main', ev.match)
+    end
+})
+-- Start texpresso compiling automatically.
 vim.api.nvim_create_autocmd('User', {
     pattern = 'VimtexEventInitPost',
-    callback = function()
-        pcall(vim.fn.call('vimtex#compiler#compile', {}))
+    callback = function(ev)
+        if vim.api.nvim_buf_get_name(ev.buf):match('preamble') == nil
+                and vim.api.nvim_buf_get_name(ev.buf):match('templates') == nil then
+            require('texpresso')
+            vim.api.nvim_exec2('TeXpresso %', {})
+            -- Also open quickfix window, so errors are known!
+            vim.api.nvim_exec2('copen', {})
+        end
     end
 })
 
@@ -158,3 +171,30 @@ vim.api.nvim_create_autocmd('BufWinEnter', {
 --     pattern = 'markdown,quarto',  -- somehow this executes twice, not that it matters that much
 --     callback = function() vim.api.nvim_command('MoltenInit') end,
 -- })
+
+-- template insertion
+local config_location = vim.fn.stdpath('config')
+vim.api.nvim_create_autocmd('BufNewFile', {
+    pattern = '*.tex',
+    callback = function(ev)
+        local template = io.open(config_location .. '/extra/templates/main.tex', 'r'):read('*a')
+        local filename = ev.match:match('[^/]*$')
+        local filename_no_ext = filename:match('^[^.]*')
+        template = template:gsub(';F', filename)
+        template = template:gsub(';f', filename_no_ext)
+        template = template:gsub(';c', config_location)
+        local line_iterator = template:gmatch('[^\n]+')
+        local lines = {}
+        local result = line_iterator()
+        while result ~= nil do
+            table.insert(lines, result)
+            result = line_iterator()
+        end
+        vim.api.nvim_buf_set_lines(ev.buf, 0, -1, true, lines)
+        -- vim.api.nvim_buf_set_var(ev.buf, 'vimtex_main')
+        vim.b[ev.buf].vimtex_main = filename
+        -- reload state? see vimtex-multi-file
+        -- pcall(vim.fn.call('vimtex#compiler#compile', {}))
+        -- vim.api.nvim_buf_set_text(ev.buf,  0, 0, 0, 0, { template })
+    end
+})

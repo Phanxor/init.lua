@@ -1,6 +1,3 @@
-local function project_name()  -- TODO: write this function
-    return ''
-end
 return {
     'nvim-lualine/lualine.nvim',
     opts = {
@@ -25,7 +22,7 @@ return {
                     unnamed = '',
                 }
             }, 'branch' },
-            lualine_c = { project_name },
+            lualine_c = { },
             lualine_x = { '%S', {
                 'diagnostics',
                 sources = { 'nvim_diagnostic' },  -- TODO: add trouble.nvim
@@ -34,6 +31,6 @@ return {
             lualine_z = { 'selectioncount', 'location', { 'progress', separator = { left = '', right = '' } } },
         },
         -- inactive_sections = sections,
-        extensions = { 'overseer' },
+        extensions = { 'overseer', 'quickfix' },
     }
 }

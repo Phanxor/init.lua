@@ -77,36 +77,90 @@ vim.lsp.config('lua-ls', {
         }
     }
 })
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'matlab',
+  callback = function()
+    vim.lsp.start({
+            cmd = {
+                '/Users/gebruiker/.local/share/nvim/mason/bin/matlab-language-server',
+                '--stdio'
+            },
+            filetypes = { 'matlab' },
+            root_dir = function(fname)
+                return vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
+            end,
+            single_file_support = false,
+            settings = {
+                MATLAB = {
+                    indexWorkspace = false,
+                    installPath = '/Applications/MATLAB_R2025b.app',
+                    matlabConnectionTiming = 'onStart',
+                    telemetry = false,
+                },
+            },
+        })
+  end,
+})
 vim.lsp.config('pyright', {
     root_dir = function(bufnr, on_dir)  -- pyright seems to spit out some error otherwise
         on_dir(vim.fn.getcwd())
     end,
 })
 vim.lsp.enable('digestif')  -- installed externally
--- vim.lsp.config('ruff', {
---     lint = {
---         -- select = {
---         --     -- pycodestyle
---         --     "E",
---         --     -- Pyflakes
---         --     "F",
---         --     -- pyupgrade
---         --     "UP",
---         --     -- flake8-bugbear
---         --     "B",
---         --     -- flake8-simplify
---         --     "SIM",
---         --     -- isort
---         --     "I",
---         -- }
---         select = "ALL",
---     },
---     -- format = {
---     --     quote_style = 'single'
---     -- }
+-- vim.lsp.enable('ccls')  -- installed externally
+-- vim.lsp.config('ccls', {
+--   init_options = {
+--     cache = {
+--       directory = ".ccls-cache";
+--     };
+--   }
 -- })
+vim.lsp.config('ruff', {
+    lint = {
+        select = {
+            -- pycodestyle
+            "E",
+            -- Pyflakes
+            "F",
+            -- pyupgrade
+            "UP",
+            -- flake8-bugbear
+            "B",
+            -- flake8-simplify
+            "SIM",
+            -- isort
+            "I",
+        }
+        -- select = "ALL",
+    },
+    format = {
+        quote_style = 'single'
+    }
+})
+vim.lsp.config('ltex_plus', {
+    settings = {
+        ltex = {
+            -- diagnosticsSeverity = 'warning',
+            additionalRules = {
+                motherTongue = 'nl'
+            },
+            checkFrequency = 'save',  -- occurs less often than on EVERY edit
+            latex = {
+                commands = {
+                    ['\\title{}'] = 'ignore',
+                    ['\\incfig{}'] = 'ignore',
+                    ['\\listofkeytheorems[]'] = 'ignore',
+                },
+            }
+        }
+    }
+})
 --
--- vim.lsp.enable('ruff')
+-- vim.lsp.config('clangd', {
+--
+-- })
+vim.lsp.enable('clangd')
+vim.lsp.enable('ruff')
 -- linting (ALE)
 vim.g.ale_set_loclist = false
 vim.g.ale_echo_cursor = false  -- no proximity
@@ -124,11 +178,14 @@ vim.g.ale_linters = {
 vim.g.ale_linters_explicit = true  -- only run specified linters
 vim.g.ale_fixers = { python = { 'ruff' } }  -- used on :ALEFix
 
+-- debug adapter
 -- change diagnostics to show ghost text but not underline
 vim.diagnostic.config({
     underline = false,
-    virtual_text = false,
-    virtual_lines = true, -- might be too long (toggle this on to see errors more clearly)
+    -- virtual_text = false,
+    -- virtual_lines = true, -- might be too long (toggle this on to see errors more clearly)
+    virtual_text = true, -- temp
+    virtual_lines = false,
     severity_sort = true,
     update_in_insert = true,  -- This is kind of necessary when using virtual lines, because otherwise
                               -- lots of (diagnostic) lines will disappear when entering insert mode.
@@ -140,10 +197,19 @@ vim.g.vimtex_compiler_method = 'latexmk'
 vim.g.vimtex_compiler_latexmk_engines = { _='-lualatex' }
 vim.g.vimtex_compiler_latexmk = {
     aux_dir = vim.fn.stdpath('state') .. '/latexmk',  -- just store every aux file in one folder (it's temporary anyways)
+    options = {
+        '-verbose',
+        '-file-line-error',
+        '-synctex=1', -- the defaults, apparently
+        '-interaction=nonstopmode',
+        -- '-f'  -- force compilation (maybe this'll fix the error popups?)
+        '-e \'$max_repeat=20\''
+    }
 }
+-- vim.g.vimtex_view_automatic = 0  -- this disables automatically opening the pdf view
 vim.g.vimtex_complete_enabled = 0  -- use LSP instead of vimtex
 vim.g.vimtex_doc_enabled = 0  -- don't open pdf docs using 'K' (because this is usually a very general latex documentation) (texdoc is default) (for now)
--- Maybe textodite? But I've installed 
+-- TODO: Maybe textodite? 
 vim.g.vimtex_fold_bib_enabled = 1
 vim.g.vimtex_indent_enabled = 0
 -- vim.g.vimtex_syntax_enabled = 1
@@ -162,6 +228,7 @@ vim.g.vimtex_syntax_conceal = {
     math_symbols=1,
     sections=0,
     styles=1,
+    texTabularChar=0,
 }
 
 vim.g.vimtex_syntax_custom_cmds = {
@@ -189,6 +256,13 @@ vim.g.vimtex_env_toggle_math_map = {
 }
 vim.g.vimtex_doc_handlers = {'vimtex#doc#handlers#texdoc'}
 vim.g.vimtex_doc_confirm_single = false
+-- Using texpresso for continuous compilation now.
+-- vim.g.vimtex_quickfix_open_on_warning = false
+-- vim.g.vimtex_quickfix_autojump = false
+-- vim.g.vimtex_quickfix_enabled = false
+-- vim.g.vimtex_quickfix_mode = 0
+-- vim.g.vimtex_compiler_silent = true
+-- vim.g.vimtex_subfile_start_local = true  -- fixes preamble as the mainfile.
 -- more options in autocommands.lua
 
 -- molten

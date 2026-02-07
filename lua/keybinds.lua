@@ -4,6 +4,8 @@ local map = vim.keymap.set
 map('n', '<leader>q', '<cmd>wqa<cr>', {desc='Quit'})
 map('n', '<leader><S-q>', '<cmd>qa!<cr>', {desc='Force quit'})
 map('n', '<leader>w', '<cmd>w<cr>', {desc='Write'})
+map('n', '<leader>tq', '<cmd>tabclose<cr>', {desc='quit tab'})
+map('n', '<leader>tm', '<cmd>messages<cr>', {desc='messages'})
 
 -- modify windows
 map('n', '<C-Left>', '<C-W><')
@@ -24,6 +26,7 @@ map('n', '<leader>sc', function()
 end, { desc = 'spell check' })
 pcall(vim.api.nvim_del_keymap, 'i', '<C-u>')
 map('i', '<C-u>', '<cmd>undo<cr>')  -- undo in insert mode
+map('s', '<C-u>', '<cmd>undo<cr>')  -- undo in insert mode
 --------------- Visual mode keybinds ---------------
 -- move lines
 map('v', 'J', ":m '>+1<cr>gv=gv")
@@ -82,7 +85,7 @@ map('n', '<leader>D', '<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<c
 
 -------------------- trouble (etc) (see above line) -----------------
 map('n',  '<leader>f', vim.lsp.buf.code_action, {  desc = 'Quickfix' })
-map('n', '<leader>d', function()
+map('n', '<leader>td', function()
     if vim.diagnostic.is_enabled() then
         vim.diagnostic.enable(false)
     else
@@ -128,9 +131,10 @@ map({'i', 'c'}, '<C-Space>', function()
         blink.hide_documentation()
     end
 end)
+-- haskell codelens
+map('n', '<leader>c', function() vim.lsp.codelens.run() end)
 -- compiler/overseer
 -- same keymap as vimtex
-map('n', '<leader>c', function() vim.lsp.codelens.run() end)
 --
 require('which-key').add({{ '<leader>l', group = 'run' }})
 map('n', '<leader>ll', function()
@@ -155,6 +159,8 @@ vim.api.nvim_create_autocmd('User', {
             return
         end
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ll')
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>lc')
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>ld')
         -- pcall(vim.api.nvim_del_keymap, 'n', '<C-k>')
         vim.keymap.set('n', '<C-k>', '<cmd>VimtexDocPackage<cr>', { buffer = true })
         -- vim.keymap.set('i', '1', function() require('luasnip').jump(1) end)  -- debug keybinds
@@ -168,14 +174,21 @@ vim.api.nvim_create_autocmd('User', {
         end)
         vim.keymap.set({'i', 's'}, '::', function() require('luasnip').jump(-1) end)
         vim.keymap.set('n', '<leader><Tab>', function() vim.fn.call('vimtex#view#view', {}) end, {buffer=true, desc = 'Focus pdf viewer'})
+        vim.keymap.set('n', 'gd', function()
+            local folder = vim.fn.getcwd(0) .. '/figures/'
+            vim.fn.jobstart('inkscape-figures edit ' .. folder, { cwd = folder })
+        end, {desc = 'Open inkscape'})
         require('which-key').add({{ '<leader>l', group = 'run - vimtex', buffer = true }})
     end
 })
 
+-- molten
 vim.api.nvim_create_autocmd('User', {
     pattern = 'MoltenInitPost',
     callback = function()
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ll')
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>lc')
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>ld')
         vim.keymap.set('n', '<leader>ll', function() require('quarto.runner').run_cell() end,
             { desc = 'Run cell', buffer = true })
         vim.keymap.set('n', '<leader>li', function() require('quarto.runner').run_line() end,
@@ -208,6 +221,7 @@ vim.api.nvim_create_autocmd('FileType', {
     pattern = 'lean',
     callback = function()
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ll')
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>lc')
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>l;')
         require('which-key').add({{ '<leader>l', group='lean'}})
         map('n', '<leader>li', '<cmd>LeanInfoviewToggle<cr>', {desc='toggle infoview'})
@@ -236,3 +250,15 @@ vim.api.nvim_create_autocmd('Filetype', {
         map('n', '<leader>la', function() require('haskell-tools').lsp.buf_eval_all() end, { buffer=true })
     end
 })
+
+-- Debug adapter protocol (dap)
+require('which-key').add({{ '<leader>d', group='dap'}})
+map('n', '<leader>du', function() require('dapui').open() end, {desc='Open ui'})
+map('n', '<leader>dd', function() require('dap').continue() end, {desc='Run file or continue'})
+map('n', '<leader>d0', function() require('dap').run_to_cursor() end, {desc='Run file to current line'})
+map('n', '<leader>dc', function() require('dap').terminate() end, {desc='Terminate'})
+map('n', '<leader>db', function() require('dap').toggle_breakpoint() end, {desc='Toggle breakpoint'})
+
+-- git
+map('n', '<leader>gg', function() require('neogit').open() end, {desc='git menu'})
+map('n', '<leader>gd', '<cmd>Gitsigns diffthis<cr>', {desc='git diff'})

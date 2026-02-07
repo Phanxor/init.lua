@@ -19,6 +19,11 @@ return {
         'windwp/nvim-autopairs',
         event = 'InsertEnter',
         opts = {},
+        init = function()
+            local Rule = require('nvim-autopairs.rule')
+            local npairs = require('nvim-autopairs')
+            npairs.add_rule(Rule('{', '}', '-tex'))
+        end
     },
     {
         'kylechui/nvim-surround',
@@ -58,6 +63,12 @@ return {
 		total_height = 0.95,
             },
             companion_port = 27121,
+            compile_command = {
+                cpp = { exec = "g++-15", args = { "-Wall", "-O3", "$(FNAME)", "-o", "$(FNOEXT)" } },
+            },
+            template_file = {
+                cpp = '/Users/gebruiker/.config/nvim/extra/templates/header.h',
+            },
         },
     },
     {
