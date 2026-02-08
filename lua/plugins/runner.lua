@@ -49,6 +49,9 @@ return {
         },
         opts = {
             mappings = false,
+            abbreviations = {
+                enable = false,
+            }
         }
     },
     {

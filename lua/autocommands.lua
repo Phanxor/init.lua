@@ -6,6 +6,12 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt.indentexpr = ""
     end
 })
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {"lean"},
+    callback = function()
+        vim.opt.indentexpr = "    "
+    end
+})
 
 -- Use treesitter for folding where possible.
 vim.api.nvim_create_autocmd('FileType', {

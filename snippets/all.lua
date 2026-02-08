@@ -1,0 +1,10 @@
+-- local ls = require('luasnip')
+-- local s, t, i = ls.s, ls.t, ls.i
+-- local snippets = {}
+-- local autosnippets = {}
+-- local add = function(arg) vim.list_extend(autosnippets, { arg }) end
+-- local add_manual = function(arg) vim.list_extend(snippets, { arg }) end
+--
+-- -- add('test', t('Hello world!'))
+--
+-- return snippets, autosnippets

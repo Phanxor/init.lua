@@ -133,6 +133,16 @@ map({'i', 'c'}, '<C-Space>', function()
 end)
 -- haskell codelens
 map('n', '<leader>c', function() vim.lsp.codelens.run() end)
+
+
+vim.keymap.set({'i', 's', 'n'}, ';;', function()
+    local ls = require('luasnip')
+    ls.jump(1)
+    if ls.choice_active() then
+        ls.change_choice(1)
+    end
+end)
+vim.keymap.set({'i', 's'}, '::', function() require('luasnip').jump(-1) end)
 -- compiler/overseer
 -- same keymap as vimtex
 --
@@ -165,14 +175,6 @@ vim.api.nvim_create_autocmd('User', {
         vim.keymap.set('n', '<C-k>', '<cmd>VimtexDocPackage<cr>', { buffer = true })
         -- vim.keymap.set('i', '1', function() require('luasnip').jump(1) end)  -- debug keybinds
         -- vim.keymap.set('i', '2', function() require('luasnip').change_choice(1) end)
-        vim.keymap.set({'i', 's', 'n'}, ';;', function()
-            local ls = require('luasnip')
-            ls.jump(1)
-            if ls.choice_active() then
-                ls.change_choice(1)
-            end
-        end)
-        vim.keymap.set({'i', 's'}, '::', function() require('luasnip').jump(-1) end)
         vim.keymap.set('n', '<leader><Tab>', function() vim.fn.call('vimtex#view#view', {}) end, {buffer=true, desc = 'Focus pdf viewer'})
         vim.keymap.set('n', 'gd', function()
             local folder = vim.fn.getcwd(0) .. '/figures/'

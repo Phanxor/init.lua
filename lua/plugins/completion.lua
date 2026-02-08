@@ -78,7 +78,11 @@ return {
             return {
                 enable_autosnippets = true,
                 update_events = 'TextChanged,TextChangedI',  -- update more often, according to documentation
-                ft_func = require('luasnip.extras.filetype_functions').from_cursor_pos,
+                ft_func = function()
+                    local ret = require('luasnip.extras.filetype_functions').from_cursor_pos()
+                    if next(ret) == nil then return {vim.bo.filetype} end
+                    return ret
+                end,
             }
         end,
     },
