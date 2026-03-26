@@ -19,6 +19,12 @@ typedef vector<string> vs;
 #define FORD(i,a,b) for (int i = int(b)-1; i >= (a); i--)
 #define FORIT(i,c) for (__typeof__((c).begin()) i = (c).begin(); i != (c).end(); i++)
 
-int main(){
-    
+int main() {
+    int t;
+    cin >> t;
+    FOR(cn,1,t+1) {
+        
+        
+        cout << "Case #" << cn << ": " << 0 << endl;
+    }
 }

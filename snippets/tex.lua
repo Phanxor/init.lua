@@ -124,6 +124,7 @@ end
 -- different value result
 for key, val in pairs({
     ['*']='cdot',
+    emp='emptyset',
     mcal='mathcal',
     mbb='mathbb',
     setm='setminus',
@@ -137,7 +138,7 @@ for key, val in pairs({
     col='colon',
     qq='qquad',
     dis='displaystyle',
-    hn='N', hz='Z', hc='C', hp='P', hk='K', hr='R', hP='powerset',
+    hn='N', hz='Z', hc='C', hp='P', hk='K', hr='R', hP='powerset', hq='Q', hee='E',
     opl='oplus',
     opm='otimes',
     apr='approx',
