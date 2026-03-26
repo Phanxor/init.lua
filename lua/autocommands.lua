@@ -12,6 +12,12 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt.indentexpr = "    "
     end
 })
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = {"quarto"},
+    callback = function()
+        vim.opt.signcolumn = "yes"
+    end
+})
 
 -- Use treesitter for folding where possible.
 vim.api.nvim_create_autocmd('FileType', {
@@ -130,7 +136,7 @@ vim.api.nvim_create_autocmd('User', {
             require('texpresso')
             vim.api.nvim_exec2('TeXpresso %', {})
             -- Also open quickfix window, so errors are known!
-            vim.api.nvim_exec2('copen', {})
+            -- vim.api.nvim_exec2('copen', {})
         end
     end
 })

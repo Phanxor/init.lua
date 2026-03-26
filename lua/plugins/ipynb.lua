@@ -1,7 +1,7 @@
 return {
     {
         -- 'GCBallesteros/jupytext.nvim',
-        'diegoortizmatajira/jupytext.nvim',
+        '5ayam5/jupytext.nvim',
         version = 'c8e4dd1',
         config = true,
         opts = {

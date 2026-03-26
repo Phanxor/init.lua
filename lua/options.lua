@@ -78,6 +78,17 @@ vim.lsp.config('lua-ls', {
     }
 })
 vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'cmake',
+  callback = function()
+    vim.lsp.start({
+            cmd = {
+                'gersemi',
+            },
+            filetypes = { 'cmake' },
+        })
+  end,
+})
+vim.api.nvim_create_autocmd('FileType', {
   pattern = 'matlab',
   callback = function()
     vim.lsp.start({

@@ -45,7 +45,7 @@ return {
         opts = {
             html = {
                 enabled = true,
-                render_modes = true
+                render_modes = {},
             },
             latex = {
                 enabled = false,
@@ -55,6 +55,11 @@ return {
                     rendered = 2
                 }
             },
+            code = {
+                enabled = true,
+                conceal_delimiters = false,
+                border = 'thin',
+            }
         },
     },
     {

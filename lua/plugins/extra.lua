@@ -58,6 +58,9 @@ return {
         cmd = { 'CompetiTest' },
 	dependencies = 'MunifTanjim/nui.nvim',
         opts = {
+            runner_ui = {
+                interface = "split",
+            },
             popup_ui = {
 		total_width = 0.95,
 		total_height = 0.95,
@@ -69,6 +72,12 @@ return {
             template_file = {
                 cpp = '/Users/gebruiker/.config/nvim/extra/templates/header.h',
             },
+            received_problems_path = function(task, file_extension)
+                return string.format("%s/%s.%s", vim.fn.getcwd(), string.lower(string.sub(task.name,1,1)), file_extension)
+            end,
+            received_contests_problems_path = function(task, file_extension)
+                return string.format("%s.%s", string.lower(string.sub(task.name,1,1)), file_extension)
+            end,
         },
     },
     {
