@@ -1,5 +1,6 @@
 local map = vim.keymap.set
 
+map('c', '<C-d>', '<C-f>')
 -- quicker save or quit
 map('n', '<leader>q', '<cmd>wqa<cr>', {desc='Quit'})
 map('n', '<leader><S-q>', '<cmd>qa!<cr>', {desc='Force quit'})
@@ -169,10 +170,12 @@ vim.api.nvim_create_autocmd('User', {
             return
         end
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ll')
+        pcall(vim.api.nvim_del_keymap, 'n', '<leader>l;')
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>lc')
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ld')
         -- pcall(vim.api.nvim_del_keymap, 'n', '<C-k>')
         vim.keymap.set('n', '<C-k>', '<cmd>VimtexDocPackage<cr>', { buffer = true })
+        vim.keymap.set('n', '<leader>l;', '<cmd>TeXpresso %<cr>')
         -- vim.keymap.set('i', '1', function() require('luasnip').jump(1) end)  -- debug keybinds
         -- vim.keymap.set('i', '2', function() require('luasnip').change_choice(1) end)
         vim.keymap.set('n', '<leader><Tab>', function() vim.fn.call('vimtex#view#view', {}) end, {buffer=true, desc = 'Focus pdf viewer'})

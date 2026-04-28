@@ -124,6 +124,7 @@ end
 -- different value result
 for key, val in pairs({
     ['*']='cdot',
+    degg='deg',
     emp='emptyset',
     mcal='mathcal',
     mbb='mathbb',
@@ -145,10 +146,12 @@ for key, val in pairs({
     inf='infty',
     inv='inf',
     inn='in',
+    oli='overline',
     ldo='ldots',
     vdo='vdots',
     ddo='ddots',
     cdo='cdots',
+    til='tilde',
     mto='mapsto',
     mfr='mapsfrom',
     ato='to',
@@ -221,7 +224,6 @@ end
 for key, val in pairs({
     sqrt='sqrt',
     tt='text',
-    oli='overline',  -- no ordered lists in math mode anyways
     vec='vec',
     bm='bm',
     vct='vec',
@@ -243,6 +245,8 @@ for key, val in pairs({
     sol='sol',
     prf='proof',
     notes='notes',
+    recap='recap',
+    story='story',
 }) do
     add(snms(key, {
             t({'\\begin{' .. val .. '}', ''}),
@@ -266,8 +270,23 @@ add(sm('\\bra ket', {
 -- add(snm('{', {  -- somehow there's still something that causes an extra '}' to occur.
 --     t('{'), i(1), t('}'), i(0)
 -- }))
+add(sm('\\in er', {
+    t('\\left\\langle '), i(1), t('\\right\\rangle '), i(0)
+}))
 add(sm('sum', {
     t('\\sum_{'), i(1, 'k'), t('='), i(2, '0'), t('}^{'), i(3), t('} '), i(0)
+}))
+add(sm({ trig='gsum', priority=1001 }, {
+    t('\\sum_{'), i(1, 'g'), t('\\in '), i(2, 'G'), t('} '), i(0)
+}))
+add(sm('exp', {
+    t('\\E\\left['), i(1), t('\\right] '), i(0)
+}))
+add(sm('pro', {
+    t('\\P\\left('), i(1), t('\\right) '), i(0)
+}))
+add(sm('var', {
+    t('\\var\\left('), i(1), t('\\right) '), i(0)
 }))
 add(sm('prod', {
     t('\\prod_{'), i(1, 'k'), t('='), i(2, '0'), t('}^{'), i(3), t('} '), i(0)
@@ -537,7 +556,7 @@ end
 add(sm('cas', {
     t({'\\begin{cases}', ''}), i(1), c(2, {t(''), d(nil, new_line) }), t({'', '\\end{cases}'})
 }))
-add(sm('deg', t('^\\circ ')))
+add(sm('degr', t('^\\circ ')))
 add(sm('lrb', {t('\\left\\{'), i(1), t('\\right\\} '), i(0)}))
 add(sm('ver', {t('\\lvert '), i(1), t('\\rvert '), i(0)}))
 add(sm('Ver', {t('\\lVert '), i(1), t('\\rVert '), i(0)}))

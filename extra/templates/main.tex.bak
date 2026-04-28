@@ -1,6 +1,5 @@
 %! TeX root = ;F
-\documentclass[11pt]{article}
-\input{;c/extra/preamble.tex}
+\documentclass[;c/extra/preamble.tex]{subfiles}
 \title{;f}
 \begin{document}
 \maketitle{}

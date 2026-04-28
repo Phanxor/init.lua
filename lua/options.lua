@@ -171,7 +171,8 @@ vim.lsp.config('ltex_plus', {
 --
 -- })
 vim.lsp.enable('clangd')
-vim.lsp.enable('ruff')
+vim.lsp.enable('pyright')
+-- vim.lsp.enable('ruff')
 -- linting (ALE)
 vim.g.ale_set_loclist = false
 vim.g.ale_echo_cursor = false  -- no proximity
@@ -203,7 +204,9 @@ vim.diagnostic.config({
 })
 vim.diagnostic.enable()
 ---------------- vimtex ---------------------
-vim.g.vimtex_view_method = 'sioyek'
+vim.g.vimtex_view_general_viewer = 'okular'
+vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
+vim.g.vimtex_view_method = 'general'
 vim.g.vimtex_compiler_method = 'latexmk'
 vim.g.vimtex_compiler_latexmk_engines = { _='-lualatex' }
 vim.g.vimtex_compiler_latexmk = {

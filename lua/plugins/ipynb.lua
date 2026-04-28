@@ -15,7 +15,7 @@ return {
         'benlubas/molten-nvim',
         build = ':UpdateRemotePlugins',
         ft = { 'markdown', 'quarto' },  -- idk I don't use quarto (yet?)
-        -- cmd = { 'MoltenInit' },
+        -- cmd = { 'MoltenInit', 'MoltenEvaluateRange' },
         dependencies = { '3rd/image.nvim' },
     },
     {

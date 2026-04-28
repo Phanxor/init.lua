@@ -23,8 +23,8 @@ int main() {
     int t;
     cin >> t;
     FOR(cn,1,t+1) {
+        cout << "Case #" << cn << ": ";
         
         
-        cout << "Case #" << cn << ": " << 0 << endl;
     }
 }

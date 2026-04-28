@@ -22,14 +22,13 @@ vim.api.nvim_create_autocmd("FileType", {
 -- Use treesitter for folding where possible.
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(ev)
-        if ev.match == 'tex' then return true end  -- don't activate on latex files (even if latex parser is installed)
-        -- if vim.treesitter.language.
+        -- if ev.match == 'tex' then return true end  -- don't activate on latex files (even if latex parser is installed)
         if pcall(vim.treesitter.language.inspect, ev.match) then
             pcall(vim.treesitter.start, ev.buf)
             vim.wo.foldmethod = 'expr'  -- treesitter indentation
             vim.wo.foldlevel = 99
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
-            vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
+            -- vim.bo.indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
         end
     end,
     desc = 'Use treesitter for folding where possible.'
@@ -77,11 +76,7 @@ vim.api.nvim_create_autocmd('FileType',     {
 vim.api.nvim_create_autocmd("User", {
     pattern = "VimtexEventViewReverse",
     callback = function()
-        if vim.loop.os_uname().sysname == "Darwin" then
-            vim.fn.jobstart('osascript -e "tell application \\"Ghostty\\" to activate"')
-        else
-            vim.command.call("b:vimtex.viewer.xdo_focus_vim()")
-        end
+        vim.command.call("b:vimtex.viewer.xdo_focus_vim()")
     end
 })
 

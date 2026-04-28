@@ -26,16 +26,16 @@ return {
             vim.cmd("colorscheme carbonfox")
         end
     },
-    {
-        'nvim-treesitter/nvim-treesitter',  -- Note: it's built-in, but useful for installing.
-        branch = 'main',
-        lazy = false,
-        build = ':TSUpdate',
-        config = function()
-            require('nvim-treesitter').install({ 'python', 'latex', 'regex', 'bash', 'yaml', 'lua' }):wait(300000)  -- wait max. 5 minutes for installing the defaults
-            -- NOTE: this requires tree-sitter-cli (and an internet connection)
-        end
-    },
+    -- {
+    --     'nvim-treesitter/nvim-treesitter',  -- Note: it's built-in, but useful for installing.
+    --     branch = 'main',
+    --     lazy = false,
+    --     build = ':TSUpdate',
+    --     config = function()
+    --         require('nvim-treesitter').install({ 'python', 'latex', 'regex', 'bash', 'yaml', 'lua' }):wait(300000)  -- wait max. 5 minutes for installing the defaults
+    --         -- NOTE: this requires tree-sitter-cli (and an internet connection)
+    --     end
+    -- },
     {
         'MeanderingProgrammer/render-markdown.nvim',
         ft = { 'markdown', 'quarto' },

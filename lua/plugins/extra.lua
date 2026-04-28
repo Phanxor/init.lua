@@ -67,10 +67,10 @@ return {
             },
             companion_port = 27121,
             compile_command = {
-                cpp = { exec = "g++-15", args = { "-Wall", "-O3", "$(FNAME)", "-o", "$(FNOEXT)" } },
+                cpp = { exec = "g++", args = { "-Wall", "-O3", "$(FNAME)", "-o", "$(FNOEXT)" } },
             },
             template_file = {
-                cpp = '/Users/gebruiker/.config/nvim/extra/templates/header.h',
+                cpp = '/home/user/.config/nvim/extra/templates/header.h',
             },
             received_problems_path = function(task, file_extension)
                 return string.format("%s/%s.%s", vim.fn.getcwd(), string.lower(string.sub(task.name,1,1)), file_extension)
@@ -95,5 +95,16 @@ return {
     },
     {
         'andymass/vim-matchup',
+    },
+    {
+        'rareitems/anki.nvim',
+        opts = {
+            tex_support = true,
+            models = {
+                ["Basic"] = "fallback::definitions",
+                ["Cloze"] = "fallback::theorems",
+                ["Dual"] = "fallback::theorems",
+            }
+        }
     }
 }
