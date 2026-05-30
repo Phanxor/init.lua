@@ -57,9 +57,12 @@ return {
             },
             code = {
                 enabled = true,
-                conceal_delimiters = false,
+                conceal_delimiters = true,
                 border = 'thin',
-            }
+            },
+            anti_conceal = {
+                enabled = false,
+            },
         },
     },
     {

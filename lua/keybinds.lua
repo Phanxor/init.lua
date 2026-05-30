@@ -1,6 +1,7 @@
 local map = vim.keymap.set
 
 map('c', '<C-d>', '<C-f>')
+
 -- quicker save or quit
 map('n', '<leader>q', '<cmd>wqa<cr>', {desc='Quit'})
 map('n', '<leader><S-q>', '<cmd>qa!<cr>', {desc='Force quit'})
@@ -86,6 +87,8 @@ map('n', '<leader>D', '<cmd>Trouble diagnostics toggle filter.buf=0 focus=true<c
 
 -------------------- trouble (etc) (see above line) -----------------
 map('n',  '<leader>f', vim.lsp.buf.code_action, {  desc = 'Quickfix' })
+map('n', ']c', '<cmd>cnext<cr>', { desc = 'quickfix next' })
+map('n', '[c', '<cmd>cprev<cr>', { desc = 'quickfix next' })
 map('n', '<leader>td', function()
     if vim.diagnostic.is_enabled() then
         vim.diagnostic.enable(false)
@@ -146,7 +149,6 @@ end)
 vim.keymap.set({'i', 's'}, '::', function() require('luasnip').jump(-1) end)
 -- compiler/overseer
 -- same keymap as vimtex
---
 require('which-key').add({{ '<leader>l', group = 'run' }})
 map('n', '<leader>ll', function()
     if next(require('overseer').list_tasks()) == nil then  -- check if there are no tasks saved
@@ -160,6 +162,9 @@ map('n', '<leader>lt', '<cmd>terminal<cr>', { desc = 'terminal' })
 -- CompetiTest
 map('n', '<leader>l;', '<cmd>CompetiTest run<cr>')
 -- vimtex
+map('n', '<leader>io', function() require('illustrate').open_under_cursor() end)
+map('n', '<leader>ii', function() require('illustrate').create_and_open_svg() end)
+
 -- insert mode mappings are nice ('`' + letter for symbol)
 -- motions are nice too (c for command, $ for math region etc)
 vim.api.nvim_create_autocmd('User', {

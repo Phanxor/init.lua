@@ -18,7 +18,7 @@ return {
             },
             sources = {
                 default = {
-                    'lsp', 'path', 'snippets'  -- Don't add buffer.
+                    'snippets', 'lsp', 'path' -- Don't add buffer.
                 },
                 per_filetype = {
                     lua = { inherit_defaults = true, 'lazydev' }
@@ -31,8 +31,9 @@ return {
                     },
                     snippets = {
                         opts = {
-                            show_autosnippets = false,  -- TODO: think of whether or not I should enable this.
+                            show_autosnippets = false,
                         },
+                        score_offset = 10,
                     }
                 },
             },
@@ -118,7 +119,10 @@ return {
                     package_installed = "✓",
                     package_pending = "➜",
                     package_uninstalled = "✗"
-                }
+                },
+                keymaps = {
+                    apply_language_filter = "<C-d>",
+                },
             },
         }
     },

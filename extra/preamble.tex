@@ -23,7 +23,6 @@
 \usetikzlibrary{calc,positioning,graphs}  % maybe datavisualization.formats.functions too?
 \usetikzlibrary{arrows,shapes}
 \usepackage{enumitem}
-\usepackage{fitch}
 \usepackage{todonotes}
 
 % inkscape support https://castel.dev/post/lecture-notes-2/
@@ -44,7 +43,7 @@
 \usepackage{romanbar}  % \Romanbar (roman numerals)
 
 % Formatting (automatic)
-\usepackage[dutch, english]{babel}
+% \usepackage[dutch, english]{babel}
 % \usepackage{csquotes}  % otherwise latex complains in info text
 \usepackage{parskip}
 \usepackage{graphicx}
@@ -54,9 +53,8 @@
 \usepackage{hyperref}
 
 % etc
-\usepackage{ifthen}
+% \usepackage{ifthen}
 % \usepackage{biblatex}
-\usepackage{subfiles}
 
 % hyperref
 \hypersetup{
@@ -64,17 +62,7 @@ colorlinks=true
 }
 
 % time setup
-\DTMsetup{useregional}
-\DTMtryregional{nl}{NL}
-
-\DTMsettimestyle{default}
-\DTMsetup{showseconds=false}
-\DTMnewdatestyle{dashes}{%
-  \renewcommand{\DTMdisplaydate}[4]{%
-    \number##3-\number##2-\number##1
-  }%
-  \renewcommand{\DTMDisplaydate}{\DTMdisplaydate}%
-}
+\DTMsetstyle{ddmmyyyy}
 \newcolumntype{d}[1]{D{.}{.}{#1} } 
 
 % font choices
@@ -163,36 +151,6 @@ colorlinks=true
  \newcommand{\linkdest}[1]{\Hy@raisedlink{\hypertarget{#1}{}}}
 \makeatother
 
-% fitch / nd
-\def\ndrules{%
-\def\ass{\by{(assumption)}{}}
-\def\prm{\by{(premise)}{}}
-\def\vari{\by{(variable)}{}}
-\def\varass{\by{(variable, assumption)}{}}
-\def\ii{\by{$\rightarrow$-in}}%
-\def\ie{\by{$\rightarrow$-el}}%
-\def\Ai{\by{$\forall$-in}}%
-\def\Ae{\by{$\forall$-el}}%
-\def\Ei{\by{$\exists$-in}}%
-\def\Ee{\by{$\exists$-el}}%
-\def\ai{\by{$\wedge$-in}}%
-\def\ae{\by{$\wedge$-el}}%
-\def\ai{\by{$\wedge$-in}}%
-\def\ae{\by{$\wedge$-el}}%
-\def\oi{\by{$\vee$-in}}%
-\def\oe{\by{$\vee$-el}}%
-\def\ni{\by{$\neg$-in}}%
-\def\ne{\by{$\neg$-el}}%
-\def\be{\by{$\bot$-el}}%
-\def\bi{\by{$\bot$-in}}%
-\def\nne{\by{$\neg\neg$-el}}%
-\def\fai{\by{$\forall$-in}}
-\def\fae{\by{$\forall$-el}}
-\def\exi{\by{$\exists$-in}}
-\def\exe{\by{$\exists$-el}}
-\def\r{\by{repeat}}
-}
-
 % keytheorems setup
 % \tcbset{
 %     styleOne\.style={
@@ -225,19 +183,10 @@ colorlinks=true
 \newkeytheorem{remark}[style=default, sibling=definition]
 \newkeytheorem{example}[style=qa, numbered=false]
 \newkeytheorem{hint}[style=default, numbered=false]
-\newkeytheorem{notes}[name=Notes,refname={notes,notes},Refname={Notes,Notes},
+\newkeytheorem{note}[name=Note,refname={note,note},Refname={Note,Note},
 numbered=false,style=default, sibling=definition, style=qa]
-% \newkeytheorem{ex}[refname={exercise,exercises},Refname={Exercise,Exercises},
-% style=qa, name=Opgave]
-% \newkeytheorem{sol}[refname={solution,solutions},Refname={Solution,Solutions},
-% style=qa, name=Oplossing, qed=\triangle, numbered=false]
-\newkeytheorem{ex}[refname={exercise,exercises},Refname={Exercise,Exercises},
-style=qa, name=Exercise]
-\newkeytheorem{sol}[refname={solution,solutions},Refname={Solution,Solutions},
-style=qa, name=Solution, qed=\square, numbered=false]
-\newkeytheorem{sol*}[refname={solution,solutions},Refname={Solution,Solutions},
-style=qa, name=Solution, numbered=false]
-\DeclareTranslation{dutch}{keythms_listof_title}{Lijst van stellingen}
-\DeclareTranslation{dutch}{remark_name}{Opmerking}
+\newkeytheorem{ex}[style=qa, name=Exercise]
+\newkeytheorem{sol}[style=qa, name=Solution, numbered=false]
+\newkeytheorem{sol*}[style=qa, name=Solution, qed=\triangle, numbered=false]
 % \begin{document}
 % \end{document}

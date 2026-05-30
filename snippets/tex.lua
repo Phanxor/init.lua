@@ -244,13 +244,15 @@ for key, val in pairs({
     exa='example',
     sol='sol',
     prf='proof',
-    notes='notes',
-    recap='recap',
-    story='story',
+    note='note',
+    rec='recap',
+    sto='story',
 }) do
     add(snms(key, {
-            t({'\\begin{' .. val .. '}', ''}),
+            t('\\begin{' .. val .. '}[name='),
             i(1),
+            t({']', ''}),
+            i(2),
             t({'', '\\end{' .. val .. '}', ''}),
             i(0)
     }))

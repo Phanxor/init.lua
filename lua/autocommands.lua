@@ -131,7 +131,16 @@ vim.api.nvim_create_autocmd('User', {
             require('texpresso')
             vim.api.nvim_exec2('TeXpresso %', {})
             -- Also open quickfix window, so errors are known!
-            -- vim.api.nvim_exec2('copen', {})
+            vim.api.nvim_exec2('copen', {})
+        end
+    end
+})
+vim.api.nvim_create_autocmd('InsertLeave', {
+    pattern = '*.tex',
+    callback = function(ev)
+        t = require('texpresso')
+        if (t.is_running()) then
+            t.reload(0)
         end
     end
 })
