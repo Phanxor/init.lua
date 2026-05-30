@@ -67,16 +67,6 @@ vim.diagnostic.config({
     }
 })
 -- lsp
--- https://www.reddit.com/r/neovim/comments/18yj2mu/how_to_properly_configure_lua_ls/
-vim.lsp.config('lua-ls', {
-    settings = {
-        Lua = {
-            diagnostics = {
-                globals = { 'require' }
-            },
-        }
-    }
-})
 vim.api.nvim_create_autocmd('FileType', {
   pattern = 'cmake',
   callback = function()
@@ -112,6 +102,9 @@ vim.api.nvim_create_autocmd('FileType', {
         })
   end,
 })
+vim.lsp.config('emmylua_ls', {
+})
+
 vim.lsp.config('pyright', {
     root_dir = function(bufnr, on_dir)  -- pyright seems to spit out some error otherwise
         on_dir(vim.fn.getcwd())
@@ -172,6 +165,7 @@ vim.lsp.config('ltex_plus', {
 -- })
 vim.lsp.enable('clangd')
 vim.lsp.enable('pyright')
+vim.lsp.enable('emmylua_ls')
 -- vim.lsp.enable('ruff')
 -- linting (ALE)
 vim.g.ale_set_loclist = false

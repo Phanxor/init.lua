@@ -14,6 +14,9 @@ map('n', '<C-Left>', '<C-W><')
 map('n', '<C-Right>', '<C-W>>')
 map('n', '<C-Up>', '<C-W>+')
 map('n', '<C-Down>', '<C-W>-')
+map('n', '<C-,>', '<C-W><')
+map('n', '<C-.>', '<C-W>>')
+
 -- other <C-]> goto definition keybind
 map('n', '<C-k>', '<C-]>')
 
