@@ -1,10 +1,11 @@
 return {
     {
-        'xvzc/chezmoi.nvim',
-        dependencies = { 'nvim-lua/plenary.nvim' },
-        opts = {},
-        cmd = { 'ChezmoiEdit', 'ChezmoiList' },
-        lazy = true,  -- only needed in very specific situations
+        "romus204/tree-sitter-manager.nvim",
+        cmd = { 'TSInstall', 'TSManager', 'TSUpdate', 'TSUninstall' },
+        dependencies = {},
+        opts = {
+            auto_install = 1,
+        },
     },
     {
         'chrishrb/gx.nvim',

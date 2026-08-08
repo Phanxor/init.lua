@@ -3,6 +3,9 @@ return {
         -- source: idk
         'mfussenegger/nvim-dap',
         lazy = true,
+        dependencies = {
+            'mfussenegger/nvim-dap-python',
+        },
         config = function()
             -- Signs
             for _, group in pairs({
@@ -25,6 +28,7 @@ return {
             -- (3) Else, create a new tab with the buffer
             --
             -- This avoid unnecessary jumps
+            require("dap-python").setup("uv")
             require("dap").defaults.fallback.switchbuf = "usevisible,usetab,newtab"
             local dap = require('dap')
             dap.adapters.codelldb = {
@@ -53,7 +57,9 @@ return {
         'rcarriga/nvim-dap-ui',
         dependencies = {
             'mfussenegger/nvim-dap',
+            'nvim-neotest/nvim-nio'
         },
+        opts = {},
     },
     {
         'theHamsta/nvim-dap-virtual-text',

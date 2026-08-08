@@ -14,7 +14,7 @@ add_manual(s('for', {
     f(function(args) return args[1][1] end, {1}),
     t({ ') {', '    ' }),
     i(4),
-    t({ '', '}', '' }),
+    t({ '', '}' }),
     i(0),
 }))
 return snippets, autosnippets

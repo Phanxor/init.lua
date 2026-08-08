@@ -6,6 +6,7 @@ vim.o.autochdir = false  -- Don't set pwd based on file (i.e. for terminals).
 vim.o.clipboard = "unnamedplus"  -- use system clipboard
 ------------- Line numbers ------------------
 vim.o.number = true
+vim.o.signcolumn = 'number'  -- replace line numbers for extra info
 vim.o.cursorline = true
 vim.o.cursorlineopt = 'number'  -- shows the current line in color
 -- I don't want relative numbers since that's too changes too often
@@ -78,32 +79,12 @@ vim.api.nvim_create_autocmd('FileType', {
         })
   end,
 })
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'matlab',
-  callback = function()
-    vim.lsp.start({
-            cmd = {
-                '/Users/gebruiker/.local/share/nvim/mason/bin/matlab-language-server',
-                '--stdio'
-            },
-            filetypes = { 'matlab' },
-            root_dir = function(fname)
-                return vim.fs.dirname(vim.fs.find('.git', { path = fname, upward = true })[1])
-            end,
-            single_file_support = false,
-            settings = {
-                MATLAB = {
-                    indexWorkspace = false,
-                    installPath = '/Applications/MATLAB_R2025b.app',
-                    matlabConnectionTiming = 'onStart',
-                    telemetry = false,
-                },
-            },
-        })
-  end,
-})
-vim.lsp.config('emmylua_ls', {
-})
+vim.g.lean_config = {
+    mappings = false,
+    abbreviations = {
+        enable = true,
+    }
+}
 
 vim.lsp.config('pyright', {
     root_dir = function(bufnr, on_dir)  -- pyright seems to spit out some error otherwise
@@ -165,7 +146,17 @@ vim.lsp.config('ltex_plus', {
 -- })
 vim.lsp.enable('clangd')
 vim.lsp.enable('pyright')
-vim.lsp.enable('emmylua_ls')
+vim.lsp.enable('qmlls')
+vim.filetype.add({
+    filename = {
+        ['docker-compose.yml'] = "yaml.docker-compose"
+    },
+    extension = {
+        jai = 'jai'
+    },
+})
+vim.treesitter.language.register("qmljs", { "qml" })
+-- vim.lsp.enable('emmylua_ls')
 -- vim.lsp.enable('ruff')
 -- linting (ALE)
 vim.g.ale_set_loclist = false
@@ -279,3 +270,5 @@ vim.g.molten_wrap_output = true
 vim.g.molten_virt_text_output = true
 vim.g.molten_virt_lines_off_by_1 = true
 vim.g.molten_output_win_max_height = 20
+-- tree-sitter
+vim.treesitter.language.register("qmljs", {"qml"})

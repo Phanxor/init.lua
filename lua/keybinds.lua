@@ -141,7 +141,6 @@ end)
 -- haskell codelens
 map('n', '<leader>c', function() vim.lsp.codelens.run() end)
 
-
 vim.keymap.set({'i', 's', 'n'}, ';;', function()
     local ls = require('luasnip')
     ls.jump(1)
@@ -149,7 +148,7 @@ vim.keymap.set({'i', 's', 'n'}, ';;', function()
         ls.change_choice(1)
     end
 end)
-vim.keymap.set({'i', 's'}, '::', function() require('luasnip').jump(-1) end)
+vim.keymap.set({'i', 's'}, ';:', function() require('luasnip').jump(-1) end)
 -- compiler/overseer
 -- same keymap as vimtex
 require('which-key').add({{ '<leader>l', group = 'run' }})
@@ -196,12 +195,21 @@ vim.api.nvim_create_autocmd('User', {
 })
 
 -- molten
-vim.api.nvim_create_autocmd('User', {
-    pattern = 'MoltenInitPost',
+vim.api.nvim_create_autocmd('FileType', {
+    pattern = 'quarto',
     callback = function()
+--         vim.keymap.set('n', '<leader>ll', function() require('quarto.runner').run_cell() end,
+--             { desc = 'Run cell', buffer = true })
+--     }
+-- })
+-- vim.api.nvim_create_autocmd('User', {
+--     pattern = 'MoltenInitPost',
+--     callback = function()
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ll')
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>lc')
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ld')
+        vim.keymap.set('n', '<leader>l;', function() require('quarto.runner').run_all() end,
+            { desc = 'Run all', buffer = true })
         vim.keymap.set('n', '<leader>ll', function() require('quarto.runner').run_cell() end,
             { desc = 'Run cell', buffer = true })
         vim.keymap.set('n', '<leader>li', function() require('quarto.runner').run_line() end,
@@ -261,6 +269,24 @@ vim.api.nvim_create_autocmd('Filetype', {
         pcall(vim.api.nvim_del_keymap, 'n', 'K')
         map('n', 'K', function() require('haskell-tools').hoogle.hoogle_signature() end, { buffer=true })
         map('n', '<leader>la', function() require('haskell-tools').lsp.buf_eval_all() end, { buffer=true })
+    end
+})
+
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "rust",
+    callback = function(ev)
+        vim.keymap.set('n', '<leader>rf', function() vim.cmd.RustLsp('codeAction') end,
+        {buf=ev.buf, desc='Code actions'})
+        vim.keymap.set('n', '<leader>rd', function()
+            vim.cmd.RustLsp('debuggables')
+        end)
+        vim.keymap.set('n', '<leader>rr', function() vim.cmd.RustLsp('runnables') end)
+    end
+})
+vim.api.nvim_create_autocmd("FileType", {
+    pattern = "c",
+    callback = function()
+        map('n', 'L', '<cmd>LspClangdSwitchSourceHeader<cr>')
     end
 })
 

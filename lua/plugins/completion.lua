@@ -131,7 +131,7 @@ return {
         ft = 'lua',
         opts = {
             library = {
-                { path = '{3rd}/luv/library', words = { 'vim%.uv' } },  -- Only enable uv when vim.uv is found. (from documentation)
+                { path = '${3rd}/luv/library', words = { 'vim%.uv' } },  -- Only enable uv when vim.uv is found. (from documentation)
             },
         }
     },
@@ -143,5 +143,9 @@ return {
             load_langs = { 'nl', 'en-US' },
             path = vim.fn.stdpath('data') .. '/ltex',  -- global dictionaries
         },
+    },
+    {
+        'mrcjkb/rustaceanvim',
+        lazy = false,
     }
 }

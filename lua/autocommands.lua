@@ -12,19 +12,13 @@ vim.api.nvim_create_autocmd("FileType", {
         vim.opt.indentexpr = "    "
     end
 })
-vim.api.nvim_create_autocmd("FileType", {
-    pattern = {"quarto"},
-    callback = function()
-        vim.opt.signcolumn = "yes"
-    end
-})
 
 -- Use treesitter for folding where possible.
 vim.api.nvim_create_autocmd('FileType', {
     callback = function(ev)
         -- if ev.match == 'tex' then return true end  -- don't activate on latex files (even if latex parser is installed)
-        if pcall(vim.treesitter.language.inspect, ev.match) then
-            pcall(vim.treesitter.start, ev.buf)
+        local res = pcall(vim.treesitter.get_parser, ev.buf, vim.bo[ev.buf].filetype)
+        if res then
             vim.wo.foldmethod = 'expr'  -- treesitter indentation
             vim.wo.foldlevel = 99
             vim.wo.foldexpr = 'v:lua.vim.treesitter.foldexpr()'
@@ -46,32 +40,6 @@ vim.api.nvim_create_autocmd('FileType',     {
     pattern  = { 'gitcommit', 'gitrebase', },
     command  = 'startinsert | 1'})
 
--- -- Automatically resize window when vimtex starts compiling on macos
--- vim.api.nvim_create_autocmd("User", {
---     pattern = "VimtexEventCompileSuccess",
---     callback = function()
---         if vim.uv.os_uname().sysname == "Darwin" then
---             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set position of window 1 to {0, 25}"')
---             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set size of window 1 to {804, 875}"')
---             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"sioyek\\" to set position of window 1 to {805, 25}"')
---             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"sioyek\\" to set size of window 1 to {635, 875}"')
---         end
---     end
--- })
-
--- -- and automatically close the viewer when done (on macos).
--- -- This doesn't work with VimtexEventQuit sadly, since that event doesn't activate.
--- vim.api.nvim_create_autocmd("User", {
---     pattern = "VimtexEventCompileStopped",
---     callback = function()
---         if vim.loop.os_uname().sysname == "Darwin" then
---             vim.fn.jobstart('osascript -e "tell application \\"sioyek\\" to quit"')
---             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set position of window 1 to {0, 25}"')
---             vim.fn.jobstart('osascript -e "tell application \\"System Events\\" to tell application process \\"Ghostty\\" to set size of window 1 to {1440, 875}"')
---         end
---     end
--- })
-
 -- Focus the terminal after inverse search
 vim.api.nvim_create_autocmd("User", {
     pattern = "VimtexEventViewReverse",
@@ -90,16 +58,6 @@ vim.api.nvim_create_autocmd('BufReadPost', {
             vim.cmd([[normal! g`"]])
         end
     end,
-})
-
--- automatically start chezmoi in its folder
-vim.api.nvim_create_autocmd({"BufRead", "BufNewFile"}, {
-    pattern = "*/.local/share/chezmoi/*",
-    callback = function(ev)
-        vim.schedule(function()
-            require("chezmoi.commands.__edit").watch(ev.buf)
-        end)
-    end
 })
 
 -- set conceil highlight to a non-dimmed color
@@ -138,7 +96,7 @@ vim.api.nvim_create_autocmd('User', {
 vim.api.nvim_create_autocmd('InsertLeave', {
     pattern = '*.tex',
     callback = function(ev)
-        t = require('texpresso')
+        local t = require('texpresso')
         if (t.is_running()) then
             t.reload(0)
         end
