@@ -1,10 +1,10 @@
 % \documentclass[11pt]{article}
 % \author{Jurre Berman}
 % Font
-% \usepackage{cochineal}
+ \usepackage{cochineal}
 \usepackage[T1]{fontenc}
-% \let\oldnormalfont\normalfont
-% \def\normalfont{\oldnormalfont\mdseries}
+ \let\oldnormalfont\normalfont
+ \def\normalfont{\oldnormalfont\mdseries}
 \usepackage{amssymb}
 \usepackage{stmaryrd}  % \lightning
 \SetSymbolFont{stmry}{bold}{U}{stmry}{m}{n}
@@ -16,7 +16,7 @@
 \usepackage{expl3}
 \usepackage{xparse}
 \usepackage{l3keys2e}
-% \usepackage{keytheorems}
+\usepackage{keytheorems}
 
 % Special environments/functions
 \usepackage{tikz}
@@ -153,41 +153,41 @@ colorlinks=true
 \makeatother
 
 % keytheorems setup
-% \tcbset{
-%     styleOne\.style={
-%         arc = 1mm,
-%             colback=blue!10!white,
-%         % colframe=blue!75!black,
-%     }
-%     styleTwo\.style={
-%         arc = 0mm, % note: still rounded corners somehow.
-%         colback=black,
-%         % colframe=blue!75!black,
-%     }
-% }
-% \keytheoremset{store-all, store-sets-label, auto-translate=false}
-% \newkeytheoremstyle{default}{bodyfont=\slshape}
-% % \newkeytheoremstyle{box}{bodyfont=\slshape, tcolorbox={styleOne}}
-% \newkeytheoremstyle{qa}{bodyfont=\normalshape, break}
-% % \newkeytheoremstyle{qabox}{bodyfont=\normalshape, break, tcolorbox={styleTwo}}
-% % Theorems
-% \newkeytheorem{story}[style=default, numbered=false]
-% \newkeytheorem{recap}[style=default, numbered=false]
-% \newkeytheorem{definition}[style=default, parent=section]
-% \newkeytheorem{notation}[style=default, parent=section]
-% \newkeytheorem{proposition}[style=default, sibling=definition]
-% \newkeytheorem{claim}[style=default, sibling=definition]
-% \newkeytheorem{conjecture}[style=default, sibling=definition]
-% \newkeytheorem{theorem}[style=default, sibling=definition]
-% \newkeytheorem{lemma}[style=default, sibling=definition]
-% \newkeytheorem{corollary}[style=default, sibling=definition]
-% \newkeytheorem{remark}[style=default, sibling=definition]
-% \newkeytheorem{example}[style=qa, numbered=false]
-% \newkeytheorem{hint}[style=default, numbered=false]
-% \newkeytheorem{note}[name=Note,refname={note,note},Refname={Note,Note},
-% numbered=false,style=default, sibling=definition, style=qa]
-% \newkeytheorem{ex}[style=qa, name=Exercise]
-% \newkeytheorem{sol}[style=qa, name=Solution, numbered=false]
-% \newkeytheorem{sol*}[style=qa, name=Solution, qed=\triangle, numbered=false]
+\tcbset{
+    styleOne\.style={
+        arc = 1mm,
+            colback=blue!10!white,
+        % colframe=blue!75!black,
+    }
+    styleTwo\.style={
+        arc = 0mm, % note: still rounded corners somehow.
+        colback=black,
+        % colframe=blue!75!black,
+    }
+}
+\keytheoremset{store-all, store-sets-label, auto-translate=false}
+\newkeytheoremstyle{default}{bodyfont=\slshape}
+% \newkeytheoremstyle{box}{bodyfont=\slshape, tcolorbox={styleOne}}
+\newkeytheoremstyle{qa}{bodyfont=\normalshape, break}
+% \newkeytheoremstyle{qabox}{bodyfont=\normalshape, break, tcolorbox={styleTwo}}
+% Theorems
+\newkeytheorem{story}[style=default, numbered=false]
+\newkeytheorem{recap}[style=default, numbered=false]
+\newkeytheorem{definition}[style=default, parent=section]
+\newkeytheorem{notation}[style=default, parent=section]
+\newkeytheorem{proposition}[style=default, sibling=definition]
+\newkeytheorem{claim}[style=default, sibling=definition]
+\newkeytheorem{conjecture}[style=default, sibling=definition]
+\newkeytheorem{theorem}[style=default, sibling=definition]
+\newkeytheorem{lemma}[style=default, sibling=definition]
+\newkeytheorem{corollary}[style=default, sibling=definition]
+\newkeytheorem{remark}[style=default, sibling=definition]
+\newkeytheorem{example}[style=qa, numbered=false]
+\newkeytheorem{hint}[style=default, numbered=false]
+\newkeytheorem{note}[name=Note,refname={note,note},Refname={Note,Note},
+numbered=false,style=default, sibling=definition, style=qa]
+\newkeytheorem{ex}[style=qa, name=Exercise]
+\newkeytheorem{sol}[style=qa, name=Solution, numbered=false]
+\newkeytheorem{sol*}[style=qa, name=Solution, qed=\triangle, numbered=false]
 % \begin{document}
 % \end{document}
