@@ -11,6 +11,7 @@ add(s('hv', {t('have '), i(1, 'h'), t(' : '), i(2), t(' := by '), i(3, 'sorry'),
 add(s('pp', {t('^('), i(1), t(')'), i(0)}))
 
 for key, val in pairs({
+    fse='false',
     fal='∀ ',
     ['for']='∀ ',
     exi='∃ ',
