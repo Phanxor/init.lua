@@ -301,3 +301,11 @@ map('n', '<leader>db', function() require('dap').toggle_breakpoint() end, {desc=
 -- git
 map('n', '<leader>gg', function() require('neogit').open() end, {desc='git menu'})
 map('n', '<leader>gd', '<cmd>Gitsigns diffthis<cr>', {desc='git diff'})
+
+-- openscad
+vim.g.openscad_auto_open = true
+vim.g.openscad_load_snippets = true
+vim.g.openscad_cheatsheet_toggle_key = 'gc'
+vim.g.openscad_help_trig_key = 'gh'
+vim.g.openscad_manual_trig_key = 'gH'
+vim.g.openscad_exec_openscad_trig_key = '<Space><Tab>'
