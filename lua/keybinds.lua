@@ -305,7 +305,7 @@ map('n', '<leader>gd', '<cmd>Gitsigns diffthis<cr>', {desc='git diff'})
 -- openscad
 vim.g.openscad_auto_open = true
 vim.g.openscad_load_snippets = true
-vim.g.openscad_cheatsheet_toggle_key = 'gc'
-vim.g.openscad_help_trig_key = 'gh'
-vim.g.openscad_manual_trig_key = 'gH'
+vim.g.openscad_cheatsheet_toggle_key = 'gC'
+vim.g.openscad_help_trig_key = '<S-K>'
+vim.g.openscad_manual_trig_key = '<C-K>'
 vim.g.openscad_exec_openscad_trig_key = '<Space><Tab>'
