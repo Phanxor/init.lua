@@ -114,7 +114,7 @@ return {
             'ibhagwan/fzf-lua',
             'L3MON4D3/LuaSnip'
         },
-        ft = 'scad',
+        ft = 'openscad',
         opts = {}
     }
 }
