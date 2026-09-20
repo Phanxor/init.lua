@@ -107,5 +107,14 @@ return {
                 ["Dual"] = "fallback::theorems",
             }
         }
+    },
+    {
+        'salkin-mada/openscad.nvim',
+        dependencies = {
+            'ibhagwan/fzf-lua',
+            'L3MON4D3/LuaSnip'
+        },
+        ft = 'scad',
+        opts = {}
     }
 }
