@@ -191,8 +191,12 @@ vim.diagnostic.enable()
 ---------------- vimtex ---------------------
 vim.g.vimtex_view_general_viewer = 'okular'
 vim.g.vimtex_view_general_options = '--unique file:@pdf\\#src:@line@tex'
-vim.g.vimtex_view_method = 'general'
-vim.g.vimtex_compiler_method = 'latexmk'
+vim.g.vimtex_view_method = 'sioyek'
+-- vim.g.vimtex_compiler_method = 'latexmk'
+-- vim.g.vimtex_compiler_method = 'texpresso'
+vim.g.vimtex_compiler_method = function()
+    return vim.g.user_compiler or 'texpresso'
+end
 vim.g.vimtex_compiler_latexmk_engines = { _='-lualatex' }
 vim.g.vimtex_compiler_latexmk = {
     aux_dir = vim.fn.stdpath('state') .. '/latexmk',  -- just store every aux file in one folder (it's temporary anyways)
@@ -205,7 +209,15 @@ vim.g.vimtex_compiler_latexmk = {
         '-e \'$max_repeat=20\''
     }
 }
+vim.g.vimtex_compiler_texpresso = {
+    options = {
+        '-tectonic',
+        '-I',
+        vim.fn.stdpath('state') .. '/latexmk',
+    }
+}
 -- vim.g.vimtex_view_automatic = 0  -- this disables automatically opening the pdf view
+
 vim.g.vimtex_complete_enabled = 0  -- use LSP instead of vimtex
 vim.g.vimtex_doc_enabled = 0  -- don't open pdf docs using 'K' (because this is usually a very general latex documentation) (texdoc is default) (for now)
 -- TODO: Maybe textodite? 
@@ -237,6 +249,8 @@ vim.g.vimtex_syntax_custom_cmds = {
     {name='Q', cmdre='Q>', mathmode=1, concealchar='ℚ'},
     {name='Z', cmdre='Z>', mathmode=1, concealchar='ℤ'},
     {name='P', cmdre='P>', mathmode=1, concealchar='ℙ'},
+    {name='F', cmdre='F>', mathmode=1, concealchar='𝔽'},
+    {name='H', cmdre='HH>', mathmode=1, concealchar='ℋ'},
     {name='limits', cmdre='limits>', mathmode=1, concealchar='.'},
     {name='mid', cmdre='Mid>', mathmode=1, concealchar='│'},
     {name='lvert', cmdre='lvert> ', mathmode=1, concealchar='|'},
@@ -255,7 +269,6 @@ vim.g.vimtex_env_toggle_math_map = {
 }
 vim.g.vimtex_doc_handlers = {'vimtex#doc#handlers#texdoc'}
 vim.g.vimtex_doc_confirm_single = false
--- Using texpresso for continuous compilation now.
 -- vim.g.vimtex_quickfix_open_on_warning = false
 -- vim.g.vimtex_quickfix_autojump = false
 -- vim.g.vimtex_quickfix_enabled = false

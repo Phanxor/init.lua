@@ -1,9 +1,9 @@
 return {
+    -- {
+    --     'phanxor/texpresso.vim',
+    -- },
     {
-        'phanxor/texpresso.vim',
-    },
-    {
-        'lervag/vimtex',
+        'phanxor/vimtex',
         lazy = false,
     },
     {

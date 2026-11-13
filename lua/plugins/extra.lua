@@ -24,6 +24,7 @@ return {
             local Rule = require('nvim-autopairs.rule')
             local npairs = require('nvim-autopairs')
             npairs.add_rule(Rule('{', '}', '-tex'))
+            table.insert(require('nvim-autopairs').get_rules("'")[1].not_filetypes, "tex")
         end
     },
     {

@@ -40,13 +40,13 @@ vim.api.nvim_create_autocmd('FileType',     {
     pattern  = { 'gitcommit', 'gitrebase', },
     command  = 'startinsert | 1'})
 
--- Focus the terminal after inverse search
-vim.api.nvim_create_autocmd("User", {
-    pattern = "VimtexEventViewReverse",
-    callback = function()
-        vim.command.call("b:vimtex.viewer.xdo_focus_vim()")
-    end
-})
+-- -- Focus the terminal after inverse search  (probably broken in texpresso/vimtex)
+-- vim.api.nvim_create_autocmd("User", {
+--     pattern = "VimtexEventViewReverse",
+--     callback = function()
+--         vim.command.call("b:vimtex.viewer.xdo_focus_vim()")
+--     end
+-- })
 
 -- Return to the previous location upon opening a buffer.
 vim.api.nvim_create_autocmd('BufReadPost', {
@@ -80,25 +80,16 @@ vim.api.nvim_create_autocmd('BufReadPre', {
         vim.api.nvim_buf_set_var(ev.buf, 'vimtex_main', ev.match)
     end
 })
--- Start texpresso compiling automatically.
+-- Start (texpresso) compiling automatically.
 vim.api.nvim_create_autocmd('User', {
     pattern = 'VimtexEventInitPost',
     callback = function(ev)
         if vim.api.nvim_buf_get_name(ev.buf):match('preamble') == nil
                 and vim.api.nvim_buf_get_name(ev.buf):match('templates') == nil then
-            require('texpresso')
-            vim.api.nvim_exec2('TeXpresso %', {})
-            -- Also open quickfix window, so errors are known!
+            -- open quickfix window, so errors are known
+            
+            pcall(vim.fn.call('vimtex#compiler#compile', {}))
             vim.api.nvim_exec2('copen', {})
-        end
-    end
-})
-vim.api.nvim_create_autocmd('InsertLeave', {
-    pattern = '*.tex',
-    callback = function(ev)
-        local t = require('texpresso')
-        if (t.is_running()) then
-            t.reload(0)
         end
     end
 })

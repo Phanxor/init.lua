@@ -180,9 +180,33 @@ vim.api.nvim_create_autocmd('User', {
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>l;')
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>lc')
         pcall(vim.api.nvim_del_keymap, 'n', '<leader>ld')
+        -- exit current environment in insert mode
+        vim.keymap.set('i', '<C-k>', function()
+            local close = vim.fn['vimtex#delim#get_surrounding']('all')[2]
+            if not close or vim.tbl_isempty(close) or not close.match then return end
+
+            if close.match == '\\]' and close.lnum < vim.api.nvim_buf_line_count(0) then
+                vim.api.nvim_win_set_cursor(0, { close.lnum + 1, 0 })
+            else
+                vim.api.nvim_win_set_cursor(0, {
+                    close.lnum,
+                    close.cnum + vim.fn.strlen(close.match) - 1,
+                })
+            end
+        end, { buffer = true, desc = 'step out of math/env' })
         -- pcall(vim.api.nvim_del_keymap, 'n', '<C-k>')
         vim.keymap.set('n', '<C-k>', '<cmd>VimtexDocPackage<cr>', { buffer = true })
-        vim.keymap.set('n', '<leader>l;', '<cmd>TeXpresso %<cr>')
+        vim.keymap.set('n', '<leader>l;', function()
+            if vim.g.user_compiler == 'latexmk' then
+                vim.g.user_compiler = 'texpresso'
+            else
+                vim.g.user_compiler = 'latexmk'
+            end
+            vim.notify("compiler: " .. vim.g.user_compiler)
+            vim.cmd.VimtexStop()
+            vim.cmd.VimtexReloadState()  -- very broken
+            vim.cmd.VimtexCompile()
+        end)
         -- vim.keymap.set('i', '1', function() require('luasnip').jump(1) end)  -- debug keybinds
         -- vim.keymap.set('i', '2', function() require('luasnip').change_choice(1) end)
         vim.keymap.set('n', '<leader><Tab>', function() vim.fn.call('vimtex#view#view', {}) end, {buffer=true, desc = 'Focus pdf viewer'})

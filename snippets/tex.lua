@@ -124,6 +124,10 @@ end
 -- different value result
 for key, val in pairs({
     ['*']='cdot',
+    pan='preann',
+    ann='ann',
+    ran='ran',
+    ell='ell',
     degg='deg',
     emp='emptyset',
     mcal='mathcal',
@@ -139,7 +143,7 @@ for key, val in pairs({
     col='colon',
     qq='qquad',
     dis='displaystyle',
-    hn='N', hz='Z', hc='C', hp='P', hk='K', hr='R', hP='powerset', hq='Q', hee='E',
+    hn='N', hz='Z', hc='C', hp='P', hk='K', hr='R', hP='powerset', hq='Q', hee='E', hf='F', hh='HH',
     opl='oplus',
     opm='otimes',
     apr='approx',
@@ -200,6 +204,8 @@ for key, val in pairs({
 }) do
     add(sm(key, t(fmt(val))))
 end
+add(snm('cito', t('\\impliescase{} ')))
+add(snm('cifr', t('\\impliedbycase{} ')))
 -- functions with curly brackets: -------
 for key, val in pairs({
     bold='textbf',
@@ -233,20 +239,7 @@ for key, val in pairs({
 end
 for key, val in pairs({
     def='definition',
-    pro='proposition',
-    con='conjecture',
     thm='theorem',
-    lem='lemma',
-    cor='corollary',
-    rem='remark',
-    clm='claim',
-    exx='ex',
-    exa='example',
-    sol='sol',
-    prf='proof',
-    note='note',
-    rec='recap',
-    sto='story',
 }) do
     add(snms(key, {
             t('\\begin{' .. val .. '}[name='),
@@ -257,6 +250,34 @@ for key, val in pairs({
             i(0)
     }))
 end
+for key, val in pairs({
+    pro='proposition',
+    con='conjecture',
+    lem='lemma',
+    cor='corollary',
+    rem='remark',
+    clm='claim',
+    exx='ex',
+    exa='example',
+    sol='sol',
+    note='note',
+    rec='recap',
+    sum='summary',
+    sto='story',
+}) do
+    add(snms(key, {
+            t({'\\begin{' .. val .. '}', ''}),
+            i(1),
+            t({'', '\\end{' .. val .. '}', ''}),
+            i(0)
+    }))
+end
+add(snms("prf", {
+    t({'\\begin{proof}', ''}),
+    i(1),
+    t({'', '\\end{' .. "proof" .. '}', ''}),
+    i(0)
+}))
 -- bkt { }
 -- sqrt, pp (^)
 -- sum, int
@@ -273,7 +294,7 @@ add(sm('\\bra ket', {
 --     t('{'), i(1), t('}'), i(0)
 -- }))
 add(sm('\\in er', {
-    t('\\left\\langle '), i(1), t('\\right\\rangle '), i(0)
+    t('\\left\\langle '), i(1), t(' \\right\\rangle '), i(0)
 }))
 add(sm('sum', {
     t('\\sum_{'), i(1, 'k'), t('='), i(2, '0'), t('}^{'), i(3), t('} '), i(0)
@@ -336,7 +357,8 @@ add(snm({trig='nn', wordTrig=true}, {
         return ''
     end), ''),
     isn(2, t({'\\[', ''}), ''),
-    i(0, '.'),  -- add static text to not cause errors when compiling
+    -- i(0, '.'),  -- add static text to not cause errors when compiling
+    i(0),
     isn(3, t({'', '\\]', ''}), ''),
 }))
 add(sm({ trig = ';([%d])', trigEngine='pattern' }, f(function(_, snip)
@@ -362,6 +384,9 @@ end)))
 add(sm('pp', {t('^{'), i(1), t('} '), i(0)}))
 --   oo for subscript
 add(sm('oo', {t('_{'), i(1), t('} '), i(0)}))
+add(sm('op', {t('_'), i(0)}))
+add(sm('qed', {t('\\qedhere{}', i(0))}))
+add(sm('po', {t('^'), i(0)}))
 add(sm('__', {t('_{'), i(1), t('} '), i(0)}))
 add(snms('\\usep', {
     t('\\usepackage'),
